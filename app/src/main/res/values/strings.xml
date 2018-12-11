@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Dine</string>
+    <string name="Login" />
+    <string name="LoginButton">Login</string>
+    <string name="buttonExit">Exit</string>
+    <string name="WelcomeText">Hello</string>
+    <string name="welcomeLoginButton">Login</string>
+    <string name="buttonWelcomeRegister">Register</string>
+    <string name="buttonWelcomeExit" >Exit</string>
+</resources>

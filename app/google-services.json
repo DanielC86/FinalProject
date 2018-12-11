@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1088869831598",
+    "firebase_url": "https://dine-367c0.firebaseio.com",
+    "project_id": "dine-367c0",
+    "storage_bucket": "dine-367c0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1088869831598:android:66ff6f5a278f90ea",
+        "android_client_info": {
+          "package_name": "com.example.danie.dine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1088869831598-968ptlo3cgmmso9fuldkchps8johqmhq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYJzT_Am594JvQBCFJa5Ybkyn23Q5IGNA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
