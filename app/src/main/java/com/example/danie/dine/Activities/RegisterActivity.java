@@ -10,44 +10,50 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.danie.dine.Model.User;
 import com.example.danie.dine.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class RegisterActivity extends AppCompatActivity {
 
 
-    private EditText userName;
-    private EditText userEmail;
-    private EditText userPhone;
-    private EditText userPassword1;
-    private EditText userPassword2;
+    private EditText regName;
+    private EditText regEmail;
+    private EditText regPhone;
+    private EditText regPassword1;
+    private EditText regPassword2;
     private ProgressBar progressBarRegister;
     private Button btnRegConfirm;
 
-    //firebase authentication
+    /*
+    firebase authentication
     private FirebaseAuth userAuth;
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        userName = findViewById(R.id.regName);
-        userEmail = findViewById(R.id.regEmail);
-        userPhone = findViewById(R.id.regPhone);
-        userPassword1 = findViewById(R.id.regPassword1);
-        userPassword2 = findViewById(R.id.regPassword2);
+        regName = findViewById(R.id.regName);
+        regEmail = findViewById(R.id.regEmail);
+        regPhone = findViewById(R.id.regPhone);
+        regPassword1 = findViewById(R.id.regPassword1);
+        regPassword2 = findViewById(R.id.regPassword2);
         progressBarRegister = findViewById(R.id.progressBarRegister);
+
+        //initialise firebase realtime database
+        FirebaseDatabase dineDB = FirebaseDatabase.getInstance();
+        final DatabaseReference table_user = dineDB.getReference("User");
 
         btnRegConfirm = findViewById(R.id.btnRegConfirm);
         progressBarRegister.setVisibility(View.INVISIBLE);
 
-        userAuth = FirebaseAuth.getInstance();
+        //userAuth = FirebaseAuth.getInstance();
 
         ///*** register button***///
         btnRegConfirm.setOnClickListener(new View.OnClickListener() {
@@ -56,13 +62,39 @@ public class RegisterActivity extends AppCompatActivity {
 
                 btnRegConfirm.setVisibility(View.INVISIBLE);
                 progressBarRegister.setVisibility(View.VISIBLE);
-                final String email = userEmail.getText().toString();
-                final String password1 = userPassword1.getText().toString();
-                final String password2 = userPassword2.getText().toString();
-                final String username = userName.getText().toString();
-                final String userphone = userPhone.getText().toString();
+
+                final String email = regEmail.getText().toString();
+                final String password1 = regPassword1.getText().toString();
+                final String password2 = regPassword2.getText().toString();
+                final String username = regName.getText().toString();
+                final String userphone = regPhone.getText().toString();
 
 
+                table_user.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //check if user already exists
+                        if (dataSnapshot.child(regName.getText().toString()).exists()) {
+                            showMessage("user name already taken!");
+                            btnRegConfirm.setVisibility(View.VISIBLE);
+                            progressBarRegister.setVisibility(View.INVISIBLE);
+                        }
+                        else{
+                            User user = new User(regEmail.getText().toString(), regPassword1.getText().toString(), regPhone.getText().toString(), regName.getText().toString());
+                            table_user.child(regName.getText().toString()).setValue(user);
+                            showMessage("Registration Completed!");
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+                /*
                 if (email.isEmpty() || username.isEmpty() || userphone.isEmpty() || password1.isEmpty() || !password1.equals(password2)) {
                     //user cannot be registered, something wrong
                     showMessage("Registration Failed, pelase check your details!");
@@ -75,6 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
                     //registration successful
                     CreateUserAccount(email, username, password1);
                 }
+                */
 
 
             }
@@ -83,10 +116,11 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
-
+    /*
     private void CreateUserAccount(String email, final String username, String password1) {
 
         //register new user method
+
         userAuth.createUserWithEmailAndPassword(email, password1)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -108,8 +142,11 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
 
-    }
 
+    }
+    */
+
+    /*
     private void updateUserInfo(String username, FirebaseUser currentUser) {
 
         //update user name method
@@ -131,6 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
     }
+    */
 
     private void updateUI() {
         Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
