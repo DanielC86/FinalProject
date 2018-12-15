@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //private FirebaseAuth userAuth;
 
-    private Intent HomeActivity;
+    private Intent HomeMenuDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         getBtnLoginExit = findViewById(R.id.btnLoginExit);
         progressBarLogin = findViewById(R.id.progressBarLogin);
        // userAuth = FirebaseAuth.getInstance();
-        HomeActivity = new Intent(this,com.example.danie.dine.Activities.HomeActivity.class);
+        HomeMenuDrawer = new Intent(this,HomeActivity.class);
 
         //exit
         getBtnLoginExit.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +91,9 @@ public class LoginActivity extends AppCompatActivity {
                         if(user.getPassword().equals(loginPassword.getText().toString())) {
                             showMessage("Sign in successfully!");
                             updateUI();
+                            //Common.loggedUser = user;
+                            finish();
+
                         }
                         else {
                             showMessage("Wrong Password!");
@@ -160,7 +163,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI() {
 
-        startActivity(HomeActivity);
+        startActivity(HomeMenuDrawer);
         finish();
 
     }
