@@ -21,7 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 public class RegisterActivity extends AppCompatActivity {
 
 
-    private EditText regName;
+    private EditText regLogin;
+    private EditText regFirstName;
     private EditText regEmail;
     private EditText regPhone;
     private EditText regPassword1;
@@ -39,7 +40,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        regName = findViewById(R.id.regName);
+        regFirstName = findViewById(R.id.regFirstName);
+        regLogin = findViewById(R.id.regLogin);
         regEmail = findViewById(R.id.regEmail);
         regPhone = findViewById(R.id.regPhone);
         regPassword1 = findViewById(R.id.regPassword1);
@@ -63,27 +65,67 @@ public class RegisterActivity extends AppCompatActivity {
                 btnRegConfirm.setVisibility(View.INVISIBLE);
                 progressBarRegister.setVisibility(View.VISIBLE);
 
+                /*
                 final String email = regEmail.getText().toString();
                 final String password1 = regPassword1.getText().toString();
                 final String password2 = regPassword2.getText().toString();
                 final String username = regName.getText().toString();
-                final String userphone = regPhone.getText().toString();
+                final String userPhone = regPhone.getText().toString();
+                */
 
 
                 table_user.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        //check if user name is empty
+                        if (regLogin.getText().toString().isEmpty()) {
+                            showMessage("please fill in username!");
+                            btnRegConfirm.setVisibility(View.VISIBLE);
+                            progressBarRegister.setVisibility(View.INVISIBLE);
+                        }
+                        //checking if email.is empty
+                        else if (regEmail.getText().toString().isEmpty()) {
+                            showMessage("please fill in email address!");
+                            btnRegConfirm.setVisibility(View.VISIBLE);
+                            progressBarRegister.setVisibility(View.INVISIBLE);
+                        }
+                        //checking if phone is empty
+                        else if (regPhone.getText().toString().isEmpty()) {
+                            showMessage("please fill in phone number!");
+                            btnRegConfirm.setVisibility(View.VISIBLE);
+                            progressBarRegister.setVisibility(View.INVISIBLE);
+                        }
+                        //checking if password is empty
+                        else if (regPassword1.getText().toString().isEmpty()) {
+                            showMessage("please fill in password!");
+                            btnRegConfirm.setVisibility(View.VISIBLE);
+                            progressBarRegister.setVisibility(View.INVISIBLE);
+                        }
+                        //check if password1 match password2
+                        else if (!regPassword1.getText().toString().equals(regPassword2.getText().toString())) {
+                            showMessage("password does not match!");
+                            btnRegConfirm.setVisibility(View.VISIBLE);
+                            progressBarRegister.setVisibility(View.INVISIBLE);
+                        }
+                        else
+                        {
+
+
+
                         //check if user already exists
-                        if (dataSnapshot.child(regName.getText().toString()).exists()) {
+                        if (dataSnapshot.child(regLogin.getText().toString()).exists()) {
                             showMessage("user name already taken!");
                             btnRegConfirm.setVisibility(View.VISIBLE);
                             progressBarRegister.setVisibility(View.INVISIBLE);
                         }
                         else{
-                            User user = new User(regEmail.getText().toString(), regPassword1.getText().toString(), regPhone.getText().toString(), regName.getText().toString());
-                            table_user.child(regName.getText().toString()).setValue(user);
+                            User newUser = new User(regEmail.getText().toString(), regPassword1.getText().toString(), regPhone.getText().toString(), regFirstName.getText().toString());
+                            table_user.child(regLogin.getText().toString()).setValue(newUser);
                             showMessage("Registration Completed!");
                             finish();
+                            updateUI();
+                        }
                         }
                     }
 
@@ -93,14 +135,12 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
 
-
                 /*
                 if (email.isEmpty() || username.isEmpty() || userphone.isEmpty() || password1.isEmpty() || !password1.equals(password2)) {
                     //user cannot be registered, something wrong
                     showMessage("Registration Failed, pelase check your details!");
                     btnRegConfirm.setVisibility(View.VISIBLE);
                     progressBarRegister.setVisibility(View.INVISIBLE);
-
 
                 }
                 else {
@@ -109,11 +149,8 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 */
 
-
             }
         });
-
-
 
     }
     /*
@@ -170,13 +207,14 @@ public class RegisterActivity extends AppCompatActivity {
     }
     */
 
+
+
     private void updateUI() {
         Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(homeActivity);
         finish();
 
     }
-
 
     private void showMessage(String message) {
 

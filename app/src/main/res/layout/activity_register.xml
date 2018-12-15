@@ -7,19 +7,6 @@
     android:background="#FFFFFF"
     tools:context=".Activities.RegisterActivity">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/button_style"
-        app:layout_constraintBottom_toTopOf="@+id/regName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/userdefault3" />
-
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
@@ -29,7 +16,7 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <EditText
-        android:id="@+id/regName"
+        android:id="@+id/regLogin"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -37,10 +24,10 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/edittext_style"
         android:ems="10"
-        android:hint="User name"
-        android:textAlignment="center"
+        android:hint="login"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/regEmail"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/regFirstName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -139,5 +126,21 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp"
         app:layout_constraintGuide_percent="0.5"/>
+
+    <EditText
+        android:id="@+id/regFirstName"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/edittext_style"
+        android:ems="10"
+        android:hint="First Name"
+        android:textAlignment="center"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/regEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

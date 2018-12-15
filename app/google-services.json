@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "1088869831598",
-    "firebase_url": "https://dine-367c0.firebaseio.com",
-    "project_id": "dine-367c0",
-    "storage_bucket": "dine-367c0.appspot.com"
+    "project_number": "520432225452",
+    "firebase_url": "https://finalproject-7d822.firebaseio.com",
+    "project_id": "finalproject-7d822",
+    "storage_bucket": "finalproject-7d822.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1088869831598:android:66ff6f5a278f90ea",
+        "mobilesdk_app_id": "1:520432225452:android:66ff6f5a278f90ea",
         "android_client_info": {
           "package_name": "com.example.danie.dine"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1088869831598-968ptlo3cgmmso9fuldkchps8johqmhq.apps.googleusercontent.com",
+          "client_id": "520432225452-hslu96c5pq5v5hoo9b78prbnpr0m9nr3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.danie.dine",
+            "certificate_hash": "10bc8a375d764d84a8b9367cdc3ba3bfaa752eac"
+          }
+        },
+        {
+          "client_id": "520432225452-9bvk0umhvkmfk0b9mkis8920j6ut9rn8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAYJzT_Am594JvQBCFJa5Ybkyn23Q5IGNA"
+          "current_key": "AIzaSyBqZJkPr_gY-L08do9AOpWj7dQ_mUEXpEo"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "520432225452-9bvk0umhvkmfk0b9mkis8920j6ut9rn8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         //initialise firebase realtime database
-        FirebaseDatabase dineDB = FirebaseDatabase.getInstance();
+        final FirebaseDatabase dineDB = FirebaseDatabase.getInstance();
         final DatabaseReference table_user = dineDB.getReference("User");
 
 
