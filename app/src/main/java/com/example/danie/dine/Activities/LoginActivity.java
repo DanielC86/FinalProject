@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.danie.dine.Model.Common;
 import com.example.danie.dine.Model.User;
 import com.example.danie.dine.R;
 import com.google.firebase.database.DataSnapshot;
@@ -91,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                         if(user.getPassword().equals(loginPassword.getText().toString())) {
                             showMessage("Sign in successfully!");
                             updateUI();
-                            //Common.loggedUser = user;
+                            Common.loggedUser = user;
                             finish();
 
                         }
