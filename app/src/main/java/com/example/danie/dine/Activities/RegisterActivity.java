@@ -124,7 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
                             table_user.child(regLogin.getText().toString()).setValue(newUser);
                             showMessage("Registration Completed!");
                             finish();
-                            //updateUI();
+                            updateUI();
                         }
                         }
                     }
