@@ -13,8 +13,7 @@ import com.example.danie.dine.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-
-    private EditText loginUsername;
+    private EditText regEmail;
     private EditText loginPassword;
     private Button btnLogin;
     private ProgressBar progressBarLogin;
@@ -30,9 +29,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-
-
-        loginUsername = findViewById(R.id.loginUsername);
         loginPassword = findViewById(R.id.loginPassword);
         btnLogin = findViewById(R.id.btnLogin);
         getBtnLoginExit = findViewById(R.id.btnLoginExit);

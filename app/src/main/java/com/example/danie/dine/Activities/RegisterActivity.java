@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class RegisterActivity extends AppCompatActivity {
 
 
-    private EditText regLogin;
+
     private EditText regFirstName;
     private EditText regEmail;
     private EditText regPhone;
@@ -28,10 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressBar progressBarRegister;
     private Button btnRegConfirm;
 
-
-    //firebase
-    private FirebaseAuth firebaseAuth;
-
+   private FirebaseAuth mAuth;
 
 
     @Override
@@ -39,18 +36,15 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-
-        firebaseAuth = FirebaseAuth.getInstance();
+        //initialize firebase
+        mAuth = FirebaseAuth.getInstance();
 
         regFirstName = findViewById(R.id.regFirstName);
-        regLogin = findViewById(R.id.regLogin);
         regEmail = findViewById(R.id.regEmail);
         regPhone = findViewById(R.id.regPhone);
         regPassword1 = findViewById(R.id.regPassword1);
         regPassword2 = findViewById(R.id.regPassword2);
         progressBarRegister = findViewById(R.id.progressBarRegister);
-
-
 
         btnRegConfirm = findViewById(R.id.btnRegConfirm);
         progressBarRegister.setVisibility(View.INVISIBLE);
@@ -64,73 +58,65 @@ public class RegisterActivity extends AppCompatActivity {
                 btnRegConfirm.setVisibility(View.INVISIBLE);
                 progressBarRegister.setVisibility(View.VISIBLE);
 
-
-
-
-
+                registerNewUser();
                         }
 
-
-
-
-
-
-
         });
-
     }
 
     private void registerNewUser(){
 
-
-        //get input
-        regLogin.getText().toString().trim();
-        regEmail.getText().toString().trim();
-        regPhone.getText().toString().trim();
-        regPassword1.getText().toString().trim();
-        regPassword2.getText().toString().trim();
+        String firstName = regFirstName.getText().toString().trim();
+        String userEmail = regEmail.getText().toString().trim();
+        String userPhone = regPhone.getText().toString().trim();
+        String userPassword1 = regPassword1.getText().toString().trim();
+        String userPassword2 = regPassword2.getText().toString().trim();
 
         //check if user name is empty
-        if (regLogin.getText().toString().isEmpty()) {
+        if (firstName.isEmpty()) {
             showMessage("please fill in username!");
             btnRegConfirm.setVisibility(View.VISIBLE);
             progressBarRegister.setVisibility(View.INVISIBLE);
         }
         //checking if email.is empty
-        else if (regEmail.getText().toString().isEmpty()) {
+        else if (userEmail.isEmpty()) {
             showMessage("please fill in email address!");
             btnRegConfirm.setVisibility(View.VISIBLE);
             progressBarRegister.setVisibility(View.INVISIBLE);
         }
         //checking if phone is empty
-        else if (regPhone.getText().toString().isEmpty()) {
+        else if (userPhone.isEmpty()) {
             showMessage("please fill in phone number!");
             btnRegConfirm.setVisibility(View.VISIBLE);
             progressBarRegister.setVisibility(View.INVISIBLE);
         }
         //checking if password is empty
-        else if (regPassword1.getText().toString().isEmpty()) {
+        else if (userPassword1.isEmpty()) {
             showMessage("please fill in password!");
             btnRegConfirm.setVisibility(View.VISIBLE);
             progressBarRegister.setVisibility(View.INVISIBLE);
         }
         //check if password1 match password2
-        else if (!regPassword1.getText().toString().equals(regPassword2.getText().toString())) {
+        else if (!userPassword1.equals(userPassword2)) {
             showMessage("password does not match!");
             btnRegConfirm.setVisibility(View.VISIBLE);
             progressBarRegister.setVisibility(View.INVISIBLE);
         }
+        else{
 
-
-        firebaseAuth.createUserWithEmailAndPassword(regEmail, regPassword1)
+        mAuth.createUserWithEmailAndPassword(userEmail, userPassword1)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
+                        if (task.isSuccessful()) {
+                            showMessage("User Registered!");
+                            updateUI();
+                        }
+
                     }
                 });
-
-    }
+    }}
 
 
 
@@ -144,7 +130,13 @@ public class RegisterActivity extends AppCompatActivity {
     private void showMessage(String message) {
 
         //showing toast message method
-        Toast.makeText(getApplicationContext(), message,Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), message,Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
     }
 }
