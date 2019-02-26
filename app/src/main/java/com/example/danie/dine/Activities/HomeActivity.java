@@ -13,18 +13,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.danie.dine.R;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Intent WelcomeActivity;
     private Intent BookingManagementActivity;
     private Button btnBookTable;
+
+
+    private FirebaseAuth mAuth;
 
     private TextView lblUserName;
     private TextView lblUserEmail;
@@ -35,14 +36,6 @@ public class HomeActivity extends AppCompatActivity
     String userPhone;
 
 
-    ListView lsUserInfo;
-
-
-    FirebaseDatabase dineDB;
-    DatabaseReference userInfo;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,24 +44,15 @@ public class HomeActivity extends AppCompatActivity
         BookingManagementActivity = new Intent(this,com.example.danie.dine.Activities.BookingManagementActivity.class);
         setContentView(R.layout.activity_home);
 
+        mAuth = FirebaseAuth.getInstance();
 
         lblUserName = (TextView)findViewById(R.id.lblUsername);
         lblUserEmail = (TextView)findViewById(R.id.lblUserEmail);
         lblUserPhone = (TextView)findViewById(R.id.lblUserPhone);
 
-
-
-
-
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Menu");
         setSupportActionBar(toolbar);
-
-
-
-
 
 
         //floating button
@@ -90,10 +74,6 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Set logged user name
-        //View headerView = navigationView.getHeaderView(0);
-        //txtFirstName = (TextView)findViewById(R.id.txtFirstName);
-        //txtFirstName.setText(Common.loggedUser.getName());
     }
 
     @Override
@@ -105,9 +85,6 @@ public class HomeActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
-
-
 
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -134,12 +111,10 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void logoff() {
-
+        mAuth.signOut();
         startActivity(WelcomeActivity);
         finish();
 
     }
-
-
 
 }

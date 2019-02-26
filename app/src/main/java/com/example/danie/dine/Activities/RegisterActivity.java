@@ -28,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressBar progressBarRegister;
     private Button btnRegConfirm;
 
-   private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
 
 
     @Override
@@ -40,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         regFirstName = findViewById(R.id.regFirstName);
-        regEmail = findViewById(R.id.regEmail);
+        regEmail = findViewById(R.id.loginEmail);
         regPhone = findViewById(R.id.regPhone);
         regPassword1 = findViewById(R.id.regPassword1);
         regPassword2 = findViewById(R.id.regPassword2);

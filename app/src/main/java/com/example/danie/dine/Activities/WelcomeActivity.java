@@ -20,7 +20,6 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent welcomeLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                //
                 startActivity(welcomeLoginIntent);
             }
         });
@@ -30,7 +29,6 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent welcomeRegisterIntent = new Intent(getApplicationContext(), RegisterActivity.class);
-                //
                 startActivity(welcomeRegisterIntent);
             }
         });
