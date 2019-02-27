@@ -112,8 +112,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(homeActivity);
         finish();
-
-
     }
     //messaging method
     private void showMessage(String s) {

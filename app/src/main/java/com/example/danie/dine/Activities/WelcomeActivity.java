@@ -7,13 +7,25 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.danie.dine.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class WelcomeActivity extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        mAuth = FirebaseAuth.getInstance();
+
+
+        //check if user already logged in
+        if (mAuth.getCurrentUser() != null){
+            //start home activity
+            updateUI();
+        }
 
         Button btnWelcomeLogin = (Button)findViewById(R.id.btnWelcomeLogin);
         btnWelcomeLogin.setOnClickListener(new View.OnClickListener() {
@@ -41,5 +53,12 @@ public class WelcomeActivity extends AppCompatActivity {
                 System.exit(0);
             }
         });
+    }
+
+    private void updateUI() {
+
+        Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(homeActivity);
+        finish();
     }
 }

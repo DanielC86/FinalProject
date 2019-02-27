@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.danie.dine.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,11 +31,7 @@ public class HomeActivity extends AppCompatActivity
     private TextView lblUserName;
     private TextView lblUserEmail;
     private TextView lblUserPhone;
-
-    String userFirstName;
-    String userEmail;
-    String userPhone;
-
+    private TextView emailView;
 
 
     @Override
@@ -45,9 +42,12 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
 
         mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
 
         lblUserName = (TextView)findViewById(R.id.lblUsername);
         lblUserEmail = (TextView)findViewById(R.id.lblUserEmail);
+        lblUserEmail.setText(currentUser.getEmail());
         lblUserPhone = (TextView)findViewById(R.id.lblUserPhone);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -97,7 +97,10 @@ public class HomeActivity extends AppCompatActivity
             // Handle log off
             logoff();
             finish();
-
+        }
+        else if (id == R.id.nav_edit_details) {
+            //open edit user details activity, for testing purposes set to log off
+            logoff();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

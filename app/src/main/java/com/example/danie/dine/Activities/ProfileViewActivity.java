@@ -1,9 +1,9 @@
 package com.example.danie.dine.Activities;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+        import android.support.v7.app.AppCompatActivity;
+        import android.os.Bundle;
 
-import com.example.danie.dine.R;
+        import com.example.danie.dine.R;
 
 public class ProfileViewActivity extends AppCompatActivity {
 
