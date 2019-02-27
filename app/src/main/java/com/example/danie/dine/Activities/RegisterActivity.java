@@ -10,11 +10,15 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.danie.dine.Model.userInformation;
 import com.example.danie.dine.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -30,6 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
+    private DatabaseReference mRef;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         //initialize firebase
         mAuth = FirebaseAuth.getInstance();
+
+        mRef = FirebaseDatabase.getInstance().getReference();
 
         regFirstName = findViewById(R.id.regFirstName);
         regEmail = findViewById(R.id.loginEmail);
@@ -112,6 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             showMessage("User Registered!");
                             updateUI();
+                            storeUserInfo();
                         }
 
                     }
@@ -131,7 +140,18 @@ public class RegisterActivity extends AppCompatActivity {
 
         //showing toast message method
         Toast.makeText(getApplicationContext(), message,Toast.LENGTH_SHORT).show();
+    }
 
+    private void storeUserInfo() {
+        //this method is to store user details into database
+        String userName = regFirstName.getText().toString().trim();
+        String userPhone = regPhone.getText().toString().trim();
+        String userEmail = regEmail.getText().toString().trim();
+
+        userInformation currentUser = new userInformation(userName, userPhone, userEmail);
+
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        mRef.child(firebaseUser.getUid()).setValue(currentUser);
     }
 
     @Override

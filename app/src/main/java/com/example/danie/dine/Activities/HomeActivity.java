@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.danie.dine.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,6 +28,8 @@ public class HomeActivity extends AppCompatActivity
 
 
     private FirebaseAuth mAuth;
+
+    private DatabaseReference mRef;
 
     private TextView lblUserName;
     private TextView lblUserEmail;
