@@ -33,16 +33,17 @@ public class HomeActivity extends AppCompatActivity
     private Intent BookingManagementActivity;
     private Button btnBookTable;
 
-
+    //firebase elements
     private FirebaseAuth mAuth;
     private DatabaseReference mRef;
     private FirebaseDatabase mDatabase;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
+    //ui elements
     private TextView lblUserName;
     private TextView lblUserEmail;
     private TextView lblUserPhone;
-    private TextView emailView;
+    //private TextView emailView;
+    // variable to store id of currently logged in user
     private String userID;
 
 
@@ -78,7 +79,6 @@ public class HomeActivity extends AppCompatActivity
 
         lblUserName = (TextView)findViewById(R.id.lblUsername);
         lblUserEmail = (TextView)findViewById(R.id.lblUserEmail);
-        //lblUserEmail.setText(currentUser.getEmail());
         lblUserPhone = (TextView)findViewById(R.id.lblUserPhone);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
