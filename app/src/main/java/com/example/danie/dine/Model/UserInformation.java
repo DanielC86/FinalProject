@@ -2,19 +2,14 @@ package com.example.danie.dine.Model;
 
 public class UserInformation {
 
-    public String userName;
-    public String phoneNumber;
-    public String userEmail;
+    private String userName;
+    private String phoneNumber;
+    private String userEmail;
 
 
     public UserInformation(){
     }
 
-    public UserInformation(String userName, String phoneNumber, String userEmail) {
-        this.userName = userName;
-        this.phoneNumber = phoneNumber;
-        this.userEmail = userEmail;
-    }
 
     public String getUserName() {
         return userName;
@@ -37,6 +32,12 @@ public class UserInformation {
     }
 
     public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public UserInformation(String userName, String phoneNumber, String userEmail) {
+        this.userName = userName;
+        this.phoneNumber = phoneNumber;
         this.userEmail = userEmail;
     }
 }

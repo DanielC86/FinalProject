@@ -55,9 +55,9 @@ public class HomeActivity extends AppCompatActivity
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        userID = currentUser.getUid();
         mDatabase = FirebaseDatabase.getInstance();
         mRef = mDatabase.getReference();
-        userID = currentUser.getUid();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -78,7 +78,7 @@ public class HomeActivity extends AppCompatActivity
 
         lblUserName = (TextView)findViewById(R.id.lblUsername);
         lblUserEmail = (TextView)findViewById(R.id.lblUserEmail);
-        lblUserEmail.setText(currentUser.getEmail());
+        //lblUserEmail.setText(currentUser.getEmail());
         lblUserPhone = (TextView)findViewById(R.id.lblUserPhone);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -90,8 +90,7 @@ public class HomeActivity extends AppCompatActivity
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    UserInformation uInfo = new UserInformation();
-
+                showInfo(dataSnapshot);
             }
 
             @Override
@@ -99,8 +98,6 @@ public class HomeActivity extends AppCompatActivity
 
             }
         });
-
-
 
 
         //floating button
@@ -136,6 +133,7 @@ public class HomeActivity extends AppCompatActivity
 
 
     @SuppressWarnings("StatementWithEmptyBody")
+    //drawer elements
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -160,18 +158,46 @@ public class HomeActivity extends AppCompatActivity
     private void BookingManagement() {
         startActivity(BookingManagementActivity);
     }
-
+        //this method to log off
     private void logoff() {
         mAuth.signOut();
         startActivity(WelcomeActivity);
         finish();
 
     }
+        //this method displays user info from database
+    private void showInfo(DataSnapshot dataSnapshot) {
+        for(DataSnapshot ds : dataSnapshot.getChildren()){
+            UserInformation uInfo = new UserInformation();
+            uInfo.setUserName(ds.child(userID).getValue(UserInformation.class).getUserName()); //get username
+            uInfo.setUserEmail(ds.child(userID).getValue(UserInformation.class).getUserEmail()); //get user email
+            uInfo.setPhoneNumber(ds.child(userID).getValue(UserInformation.class).getPhoneNumber()); //get user phone number
+            //display user details
+            lblUserName.setText(uInfo.getUserName());
+            lblUserEmail.setText(uInfo.getUserEmail());
+            lblUserPhone.setText(uInfo.getPhoneNumber());
+        }
+    }
 
     private void showMessage(String message) {
 
         //showing toast message method
         Toast.makeText(getApplicationContext(), message,Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
 }
