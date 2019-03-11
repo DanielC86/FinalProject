@@ -113,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(homeActivity);
         finish();
     }
+
     //messaging method
     private void showMessage(String s) {
         Toast.makeText(getApplicationContext(), s,Toast.LENGTH_SHORT).show();

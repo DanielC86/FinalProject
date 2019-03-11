@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.danie.dine.Model.userInformation;
+import com.example.danie.dine.Model.UserInformation;
 import com.example.danie.dine.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         //initialize firebase
         mAuth = FirebaseAuth.getInstance();
 
-        mRef = FirebaseDatabase.getInstance().getReference();
+        mRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         regFirstName = findViewById(R.id.regFirstName);
         regEmail = findViewById(R.id.loginEmail);
@@ -148,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity {
         String userPhone = regPhone.getText().toString().trim();
         String userEmail = regEmail.getText().toString().trim();
 
-        userInformation currentUser = new userInformation(userName, userPhone, userEmail);
+        UserInformation currentUser = new UserInformation(userName, userPhone, userEmail);
 
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         mRef.child(firebaseUser.getUid()).setValue(currentUser);

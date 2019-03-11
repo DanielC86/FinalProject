@@ -2,6 +2,7 @@ package com.example.danie.dine.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -14,11 +15,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.danie.dine.Model.UserInformation;
 import com.example.danie.dine.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -28,13 +35,15 @@ public class HomeActivity extends AppCompatActivity
 
 
     private FirebaseAuth mAuth;
-
     private DatabaseReference mRef;
+    private FirebaseDatabase mDatabase;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     private TextView lblUserName;
     private TextView lblUserEmail;
     private TextView lblUserPhone;
     private TextView emailView;
+    private String userID;
 
 
     @Override
@@ -46,6 +55,25 @@ public class HomeActivity extends AppCompatActivity
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        mDatabase = FirebaseDatabase.getInstance();
+        mRef = mDatabase.getReference();
+        userID = currentUser.getUid();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+
+                    showMessage("Successfully signed in with: " + user.getEmail());
+                } else {
+                    // User is signed out
+                    showMessage("Successfully signed out.");
+                }
+                // ...
+            }
+        };
 
 
         lblUserName = (TextView)findViewById(R.id.lblUsername);
@@ -56,6 +84,23 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Menu");
         setSupportActionBar(toolbar);
+
+
+
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    UserInformation uInfo = new UserInformation();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
 
 
         //floating button
@@ -121,6 +166,12 @@ public class HomeActivity extends AppCompatActivity
         startActivity(WelcomeActivity);
         finish();
 
+    }
+
+    private void showMessage(String message) {
+
+        //showing toast message method
+        Toast.makeText(getApplicationContext(), message,Toast.LENGTH_SHORT).show();
     }
 
 }
