@@ -68,7 +68,6 @@ public class RegisterActivity extends AppCompatActivity {
 
                 registerNewUser();
                         }
-
         });
     }
 
@@ -143,11 +142,10 @@ public class RegisterActivity extends AppCompatActivity {
     private void storeUserInfo() {
         //this method is to store user details into database
         String userName = regFirstName.getText().toString().trim();
-        String userPhone = regPhone.getText().toString().trim();
+        String phoneNumber = regPhone.getText().toString().trim();
         String userEmail = regEmail.getText().toString().trim();
 
-        UserInformation currentUser = new UserInformation(userName, userPhone, userEmail);
-
+        UserInformation currentUser = new UserInformation(userName, phoneNumber, userEmail);
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         mRef.child(firebaseUser.getUid()).setValue(currentUser);
     }
