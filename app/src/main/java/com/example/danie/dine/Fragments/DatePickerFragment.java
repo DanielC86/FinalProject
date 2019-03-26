@@ -1,4 +1,4 @@
-package com.example.danie.dine.Model;
+package com.example.danie.dine.Fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

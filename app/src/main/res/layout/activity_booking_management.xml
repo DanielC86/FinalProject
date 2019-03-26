@@ -10,13 +10,11 @@
         android:id="@+id/btnTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/button_style"
         android:text="Pick Time"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/lblTime"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnDate" />
 
@@ -24,14 +22,11 @@
         android:id="@+id/lblTime"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/textview_style"
         android:text="Time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.737"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnTime"
         app:layout_constraintTop_toBottomOf="@+id/lblDate" />
 
     <android.support.constraint.Guideline
@@ -62,13 +57,10 @@
         android:id="@+id/lblDate"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/textview_style"
         android:text="Date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.313"
         app:layout_constraintStart_toEndOf="@+id/btnDate"
         app:layout_constraintTop_toTopOf="@+id/guideline9" />
 
@@ -76,42 +68,24 @@
         android:id="@+id/lblGuests"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/textview_style"
-        android:text="Guests"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.727"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="Guests: 1"
+        app:layout_constraintStart_toEndOf="@+id/btnMinus"
         app:layout_constraintTop_toBottomOf="@+id/lblTime" />
 
     <Button
         android:id="@+id/btnDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/button_style"
         android:text="Pick date"
         android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline9" />
-
-    <Button
-        android:id="@+id/btnGuests"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/button_style"
-        android:text="pick guests"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/lblGuests"
-        app:layout_constraintHorizontal_bias="0.619"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnTime" />
 
     <Button
         android:id="@+id/button6"
@@ -126,8 +100,36 @@
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.539"
+        app:layout_constraintHorizontal_bias="0.684"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline9"
-        app:layout_constraintVertical_bias="0.9" />
+        app:layout_constraintVertical_bias="0.973" />
+
+    <Button
+        android:id="@+id/btnPlus"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_style"
+        android:text="+"
+        android:textColor="#FFFFFF"
+        android:textSize="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnTime" />
+
+    <Button
+        android:id="@+id/btnMinus"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_style"
+        android:text="-"
+        android:textColor="#FFFFFF"
+        android:textSize="40dp"
+        app:layout_constraintStart_toEndOf="@+id/btnPlus"
+        app:layout_constraintTop_toBottomOf="@+id/btnTime" />
+
+
 </android.support.constraint.ConstraintLayout>

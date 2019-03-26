@@ -11,14 +11,17 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.example.danie.dine.Model.DatePickerFragment;
-import com.example.danie.dine.Model.TimePickerFragment;
+import com.example.danie.dine.Fragments.DatePickerFragment;
+import com.example.danie.dine.Fragments.TimePickerFragment;
 import com.example.danie.dine.R;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 
 public class BookingManagementActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+
+    private int guestNumber = 1;
+    private TextView lblGuests;
 
 
 
@@ -30,6 +33,36 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
 
         Button btnDate = (Button) findViewById(R.id.btnDate);
         Button btnTime = (Button) findViewById(R.id.btnTime);
+        Button btnPlus = (Button) findViewById(R.id.btnPlus);
+        Button btnMinus = (Button) findViewById(R.id.btnMinus);
+
+        btnPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //code to add guest number and display
+                guestNumber++;
+                TextView lblGuests = (TextView) findViewById(R.id.lblGuests);
+                lblGuests.setText("Guests: " + guestNumber);
+                if (guestNumber > 8) {
+                    guestNumber = guestNumber - 9;
+                }
+            }
+        });
+
+        btnMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //code to decrease guest number
+                TextView lblGuests = (TextView) findViewById(R.id.lblGuests);
+                lblGuests.setText("Guests: " + guestNumber);
+                if (guestNumber == 1 ) {
+                    guestNumber = 1;
+                }
+                else {
+                    guestNumber--;
+                }
+            }
+        });
 
 
         btnDate.setOnClickListener(new View.OnClickListener() {
