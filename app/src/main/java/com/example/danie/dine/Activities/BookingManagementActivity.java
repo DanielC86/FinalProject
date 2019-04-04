@@ -14,6 +14,9 @@ import android.widget.TimePicker;
 import com.example.danie.dine.Fragments.DatePickerFragment;
 import com.example.danie.dine.Fragments.TimePickerFragment;
 import com.example.danie.dine.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -23,13 +26,20 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
     private int guestNumber = 1;
     private TextView lblGuests;
 
+    //database stuff
+    private FirebaseAuth mAuth;
+    private DatabaseReference mRef;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_booking_management);
+
+        //initialize firebase
+        mAuth = FirebaseAuth.getInstance();
+        mRef = FirebaseDatabase.getInstance().getReference().child("Reservations");
 
         Button btnDate = (Button) findViewById(R.id.btnDate);
         Button btnTime = (Button) findViewById(R.id.btnTime);
@@ -106,6 +116,10 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         TextView lblTime = (TextView) findViewById(R.id.lblTime);
         lblTime.setText(currentTime);
 
+
+    }
+
+    public void makeReservation(){
 
     }
 }

@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private ProgressBar progressBarLogin;
     private Button getBtnLoginExit;
+    private Button btnRestaurant;
 
     private FirebaseAuth mAuth;
 
@@ -49,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         getBtnLoginExit = findViewById(R.id.btnLoginExit);
         progressBarLogin = findViewById(R.id.progressBarLogin);
+        btnRestaurant = findViewById(R.id.btnRestaurant);
 
 
         //exit
@@ -70,6 +72,14 @@ public class LoginActivity extends AppCompatActivity {
                 progressBarLogin.setVisibility(View.VISIBLE);
                 btnLogin.setVisibility(View.INVISIBLE);
                 userLogin();
+            }
+        });
+
+        //go for restaurant login
+        btnRestaurant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BusinessLogin();
             }
         });
 
@@ -111,6 +121,12 @@ public class LoginActivity extends AppCompatActivity {
 
         Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(homeActivity);
+        finish();
+    }
+
+    private void BusinessLogin(){
+        Intent restaurantLoginActivity = new Intent(getApplicationContext(), RestaurantLoginActivity.class);
+        startActivity(restaurantLoginActivity);
         finish();
     }
 

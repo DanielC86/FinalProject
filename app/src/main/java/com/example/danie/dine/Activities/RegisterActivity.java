@@ -44,7 +44,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         //initialize firebase
         mAuth = FirebaseAuth.getInstance();
-
         mRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         regFirstName = findViewById(R.id.regFirstName);

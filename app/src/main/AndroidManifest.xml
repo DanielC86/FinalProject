@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Activities.RestaurantLoginActivity"></activity>
         <activity android:name=".Activities.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +28,7 @@
             android:name=".Activities.HomeActivity"
             android:label="@string/title_activity_home_menu_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.BookingManagementActivity"></activity>
+        <activity android:name=".Activities.BookingManagementActivity" />
     </application>
 
 </manifest>
