@@ -22,6 +22,7 @@ public class RestaurantLoginActivity extends AppCompatActivity {
     private EditText rPassword;
     private Button btnRLogin;
     private Button btnRExit;
+    private Button btnRestaurantRegister;
 
     private FirebaseAuth mAuth;
 
@@ -42,6 +43,7 @@ public class RestaurantLoginActivity extends AppCompatActivity {
         rPassword = findViewById(R.id.rPassword);
         btnRLogin =  findViewById(R.id.btnRLogin);
         btnRExit = findViewById(R.id.btnRExit);
+        btnRestaurantRegister = findViewById(R.id.btnRestaurantRegister);
 
 
         btnRExit.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +59,13 @@ public class RestaurantLoginActivity extends AppCompatActivity {
                 RestaurantLogin();
             }
         }));
+
+        btnRestaurantRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                restaurantRegister();
+            }
+        });
     }
 
     private void Exit(){
@@ -104,5 +113,10 @@ public class RestaurantLoginActivity extends AppCompatActivity {
     private void updateUI(){
         Intent RestaurantViewActivity = new Intent (getApplicationContext(), RestaurantViewActivity.class);
         startActivity(RestaurantViewActivity);
+    }
+
+    private void restaurantRegister(){
+        Intent RestaurantRegisterActivity = new Intent(getApplicationContext(), com.example.danie.dine.Activities.RestaurantRegisterActivity.class);
+        startActivity(RestaurantRegisterActivity);
     }
 }

@@ -66,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
                 progressBarRegister.setVisibility(View.VISIBLE);
 
                 registerNewUser();
-                        }
+            }
         });
     }
 
@@ -84,7 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
             btnRegConfirm.setVisibility(View.VISIBLE);
             progressBarRegister.setVisibility(View.INVISIBLE);
         }
-        //checking if email.is empty
+        //checking if email is empty
         else if (userEmail.isEmpty()) {
             showMessage("please fill in email address!");
             btnRegConfirm.setVisibility(View.VISIBLE);
@@ -109,7 +109,6 @@ public class RegisterActivity extends AppCompatActivity {
             progressBarRegister.setVisibility(View.INVISIBLE);
         }
         else{
-
         mAuth.createUserWithEmailAndPassword(userEmail, userPassword1)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -129,11 +128,9 @@ public class RegisterActivity extends AppCompatActivity {
         Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(homeActivity);
         finish();
-
     }
 
     private void showMessage(String message) {
-
         //showing toast message method
         Toast.makeText(getApplicationContext(), message,Toast.LENGTH_SHORT).show();
     }

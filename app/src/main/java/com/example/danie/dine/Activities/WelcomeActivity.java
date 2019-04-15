@@ -27,6 +27,8 @@ public class WelcomeActivity extends AppCompatActivity {
             updateUI();
         }
 
+        Button btnRestaurant = (Button)findViewById(R.id.btnRestaurant);
+
         Button btnWelcomeLogin = (Button)findViewById(R.id.btnWelcomeLogin);
         btnWelcomeLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,12 +55,25 @@ public class WelcomeActivity extends AppCompatActivity {
                 System.exit(0);
             }
         });
+
+        //go for restaurant login
+        btnRestaurant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BusinessLogin();
+            }
+        });
     }
 
+    //normal user menu screen
     private void updateUI() {
-
         Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(homeActivity);
         finish();
+    }
+    //restaurant menu screen
+    private void BusinessLogin(){
+        Intent restaurantLoginActivity = new Intent(getApplicationContext(), RestaurantLoginActivity.class);
+        startActivity(restaurantLoginActivity);
     }
 }
