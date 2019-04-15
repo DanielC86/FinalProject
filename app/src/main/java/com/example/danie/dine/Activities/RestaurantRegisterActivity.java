@@ -10,11 +10,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.danie.dine.Model.RestaurantInformation;
 import com.example.danie.dine.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -112,7 +114,7 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 showMessage("Restaurant Registered!");
                                 restaurantLogin();
-                                //storeUserInfo();
+                                storeRestaurantInfo();
                             }
                         }
                     });
@@ -129,6 +131,17 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
         Intent RestaurantViewActivity = new Intent(getApplicationContext(), RestaurantViewActivity.class);
         startActivity(RestaurantViewActivity);
         finish();
+    }
+
+    //storing restaurant info into database
+    private void storeRestaurantInfo(){
+        String restaurantName = regRestName.getText().toString().trim();
+        String restaurantPhone = regRestPhone.getText().toString().trim();
+        String restaurantEmail = regRestEmail.getText().toString().trim();
+
+        RestaurantInformation currentRestaurant = new RestaurantInformation(restaurantName, restaurantPhone, restaurantEmail);
+        FirebaseUser firebaseResaurant = mAuth.getCurrentUser();
+        mRef.child(firebaseResaurant.getUid()).setValue(currentRestaurant);
     }
 
     @Override
