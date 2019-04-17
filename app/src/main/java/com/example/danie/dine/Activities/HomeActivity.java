@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity
         FirebaseUser currentUser = mAuth.getCurrentUser();
         userID = currentUser.getUid();
         mDatabase = FirebaseDatabase.getInstance();
-        mRef = mDatabase.getReference();
+        mRef = mDatabase.getReference().child("Users");
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -87,10 +87,33 @@ public class HomeActivity extends AppCompatActivity
 
 
 
+        /*
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 showInfo(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        */
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserInformation userDetails = dataSnapshot.getValue(UserInformation.class);
+                userDetails.getUserName();
+                userDetails.getPhoneNumber();
+                userDetails.getUserEmail();
+                userDetails.setUserName(dataSnapshot.child(userID).getValue(UserInformation.class).getUserName()); //get username
+                userDetails.setUserEmail(dataSnapshot.child(userID).getValue(UserInformation.class).getUserEmail()); //get user email
+                userDetails.setPhoneNumber(dataSnapshot.child(userID).getValue(UserInformation.class).getPhoneNumber()); //get user phone number
+                lblUserName.setText(userDetails.getUserName());
+                lblUserEmail.setText(userDetails.getUserEmail());
+                lblUserPhone.setText(userDetails.getPhoneNumber());
+
             }
 
             @Override
@@ -165,6 +188,7 @@ public class HomeActivity extends AppCompatActivity
         finish();
 
     }
+    /*
         //this method displays user info from database
     private void showInfo(DataSnapshot dataSnapshot) {
         for(DataSnapshot ds : dataSnapshot.getChildren()){
@@ -178,6 +202,7 @@ public class HomeActivity extends AppCompatActivity
             lblUserPhone.setText(uInfo.getPhoneNumber());
         }
     }
+    */
 
     private void showMessage(String message) {
 
