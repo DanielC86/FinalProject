@@ -2,60 +2,71 @@ package com.example.danie.dine.Model;
 
 public class TableInformation {
 
-    private String userName;
-    private String userPhone;
-    private String reservationDate;
-    private String reservationTime;
-    private int guestNumber;
+    private String bookingName;
+    private String bookingEmail;
+    private String bookingPhone;
+    private String bookingDate;
+    private String bookingTime;
+    private String bookingGuestNumber;
 
     public TableInformation(){
+
     }
 
-    public String getUserName() {
-        return userName;
+    public String getBookingName() {
+        return bookingName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setBookingName(String bookingName) {
+        this.bookingName = bookingName;
     }
 
-    public String getUserPhone() {
-        return userPhone;
+    public String getBookingEmail() {
+        return bookingEmail;
     }
 
-    public void setUserPhone(String userPhone) {
-        this.userPhone = userPhone;
+    public void setBookingEmail(String bookingEmail) {
+        this.bookingEmail = bookingEmail;
     }
 
-    public String getReservationDate() {
-        return reservationDate;
+    public String getBookingPhone() {
+        return bookingPhone;
     }
 
-    public void setReservationDate(String reservationDate) {
-        this.reservationDate = reservationDate;
+    public void setBookingPhone(String bookingPhone) {
+        this.bookingPhone = bookingPhone;
     }
 
-    public String getReservationTime() {
-        return reservationTime;
+    public String getBookingDate() {
+        return bookingDate;
     }
 
-    public void setReservationTime(String reservationTime) {
-        this.reservationTime = reservationTime;
+    public void setBookingDate(String bookingDate) {
+        this.bookingDate = bookingDate;
     }
 
-    public int getGuestNumber() {
-        return guestNumber;
+    public String getBookingTime() {
+        return bookingTime;
     }
 
-    public void setGuestNumber(int guestNumber) {
-        this.guestNumber = guestNumber;
+    public void setBookingTime(String bookingTime) {
+        this.bookingTime = bookingTime;
     }
 
-    public TableInformation(String userName, String userPhone, String reservationDate, String reservationTime, int guestNumber){
-        this.userName = userName;
-        this.userPhone = userPhone;
-        this.reservationDate = reservationDate;
-        this.reservationTime = reservationTime;
-        this.guestNumber = guestNumber;
+    public String getBookingGuestNumber() {
+        return bookingGuestNumber;
+    }
+
+    public void setBookingGuestNumber(String bookingGuestNumber) {
+        this.bookingGuestNumber = bookingGuestNumber;
+    }
+
+    public TableInformation(String bookingName, String bookingEmail, String bookingPhone, String bookingDate, String bookingTime, String bookingGuestNumber){
+        this.bookingName = bookingName;
+        this.bookingEmail = bookingEmail;
+        this.bookingPhone = bookingPhone;
+        this.bookingDate = bookingDate;
+        this.bookingTime = bookingTime;
+        this.bookingGuestNumber = bookingGuestNumber;
     }
 }

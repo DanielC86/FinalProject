@@ -32,8 +32,8 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressBar progressBarRegister;
     private Button btnRegConfirm;
 
+    //database stuff
     private FirebaseAuth mAuth;
-
     private DatabaseReference mRef;
 
 
