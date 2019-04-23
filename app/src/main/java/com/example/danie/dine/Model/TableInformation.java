@@ -8,6 +8,7 @@ public class TableInformation {
     private String bookingDate;
     private String bookingTime;
     private String bookingGuestNumber;
+    private String bookingStatus;
 
     public TableInformation(){
 
@@ -57,16 +58,25 @@ public class TableInformation {
         return bookingGuestNumber;
     }
 
+    public String getBookingStatus() {
+        return bookingStatus;
+    }
+
+    public void setBookingStatus(String bookingStatus) {
+        this.bookingStatus = bookingStatus;
+    }
+
     public void setBookingGuestNumber(String bookingGuestNumber) {
         this.bookingGuestNumber = bookingGuestNumber;
     }
 
-    public TableInformation(String bookingName, String bookingEmail, String bookingPhone, String bookingDate, String bookingTime, String bookingGuestNumber){
+    public TableInformation(String bookingName, String bookingEmail, String bookingPhone, String bookingDate, String bookingTime, String bookingGuestNumber, String bookingStatus){
         this.bookingName = bookingName;
         this.bookingEmail = bookingEmail;
         this.bookingPhone = bookingPhone;
         this.bookingDate = bookingDate;
         this.bookingTime = bookingTime;
         this.bookingGuestNumber = bookingGuestNumber;
+        this.bookingStatus = bookingStatus;
     }
 }

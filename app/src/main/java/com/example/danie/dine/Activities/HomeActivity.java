@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.danie.dine.Model.TableInformation;
 import com.example.danie.dine.Model.UserInformation;
 import com.example.danie.dine.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,13 +39,22 @@ public class HomeActivity extends AppCompatActivity
     private DatabaseReference mRef;
     private FirebaseDatabase mDatabase;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
+    //firebase for table
+    private FirebaseAuth tableAuth;
+    private DatabaseReference tableRef;
+    private FirebaseDatabase tableDatabase;
+    private FirebaseAuth.AuthStateListener tableAuthListener;
+
     //ui elements
     private TextView lblUserName;
     private TextView lblUserEmail;
     private TextView lblUserPhone;
+    private TextView tableUserView;
     //private TextView emailView;
     // variable to store id of currently logged in user
     private String userID;
+    private String tableID;
 
 
     @Override
@@ -59,6 +69,13 @@ public class HomeActivity extends AppCompatActivity
         userID = currentUser.getUid();
         mDatabase = FirebaseDatabase.getInstance();
         mRef = mDatabase.getReference().child("Users");
+
+        tableAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentTable = tableAuth.getCurrentUser();
+        tableID = currentTable.getUid();
+        tableDatabase = FirebaseDatabase.getInstance();
+        tableRef = tableDatabase.getReference().child("Tables");
+
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -80,6 +97,7 @@ public class HomeActivity extends AppCompatActivity
         lblUserName = (TextView)findViewById(R.id.lblUsername);
         lblUserEmail = (TextView)findViewById(R.id.lblUserEmail);
         lblUserPhone = (TextView)findViewById(R.id.lblUserPhone);
+        tableUserView = (TextView)findViewById(R.id.tableUserView);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Menu");
@@ -100,6 +118,8 @@ public class HomeActivity extends AppCompatActivity
             }
         });
         */
+
+        //display user info
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -107,13 +127,41 @@ public class HomeActivity extends AppCompatActivity
                 userDetails.getUserName();
                 userDetails.getPhoneNumber();
                 userDetails.getUserEmail();
+
                 userDetails.setUserName(dataSnapshot.child(userID).getValue(UserInformation.class).getUserName()); //get username
                 userDetails.setUserEmail(dataSnapshot.child(userID).getValue(UserInformation.class).getUserEmail()); //get user email
                 userDetails.setPhoneNumber(dataSnapshot.child(userID).getValue(UserInformation.class).getPhoneNumber()); //get user phone number
                 lblUserName.setText(userDetails.getUserName());
                 lblUserEmail.setText(userDetails.getUserEmail());
                 lblUserPhone.setText(userDetails.getPhoneNumber());
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        //display booking info
+        tableRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                TableInformation tableDetails = dataSnapshot.getValue(TableInformation.class);
+                tableDetails.getBookingName();
+                tableDetails.getBookingEmail();
+                tableDetails.getBookingPhone();
+                tableDetails.getBookingDate();
+                tableDetails.getBookingTime();
+                tableDetails.getBookingGuestNumber();
+                tableDetails.getBookingStatus();
+
+                tableDetails.setBookingName(dataSnapshot.child(tableID).getValue(TableInformation.class).getBookingName());
+                tableDetails.setBookingDate(dataSnapshot.child(tableID).getValue(TableInformation.class).getBookingDate());
+                tableDetails.setBookingTime(dataSnapshot.child(tableID).getValue(TableInformation.class).getBookingTime());
+                tableDetails.setBookingGuestNumber(dataSnapshot.child(tableID).getValue(TableInformation.class).getBookingGuestNumber());
+                tableDetails.setBookingStatus(dataSnapshot.child(tableID).getValue(TableInformation.class).getBookingStatus());
+
+                tableUserView.setText("Table booked  for " + (tableDetails.getBookingName()) + ", date: " + (tableDetails.getBookingDate()) + "at: " + (tableDetails.getBookingTime()) + "Status: " + (tableDetails.getBookingStatus()));
             }
 
             @Override

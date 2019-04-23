@@ -2,6 +2,7 @@ package com.example.danie.dine.Activities;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -32,6 +33,7 @@ import java.util.Calendar;
 public class BookingManagementActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private int guestNumber = 1;
+    String status = "Awaiting";
     private TextView lblGuests;
     private String bookingDate;
     private String bookingTime;
@@ -160,6 +162,8 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
             public void onClick(View v) {
                 System.out.println("Reservation successful with date of " + currentDate + " and time " + currentTime + ", number of guests: " + guestNumber);
                 storeBookingInfo();
+                updateUI();
+                showMessage("Request sent!");
             }
         });
 
@@ -224,10 +228,17 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         String bookingDate = currentDate;
         String bookingTime = currentTime;
         String bookingGuestNumber = guests;
+        String bookingStatus = status;
 
-        TableInformation currentBooking = new TableInformation(bookingName, bookingEmail, bookingPhone, bookingDate, bookingTime, bookingGuestNumber);
+        TableInformation currentBooking = new TableInformation(bookingName, bookingEmail, bookingPhone, bookingDate, bookingTime, bookingGuestNumber, bookingStatus);
         FirebaseUser firebaseTable = tableAuth.getCurrentUser();
         tableRef.child(firebaseTable.getUid()).setValue(currentBooking);
+    }
+
+    private void updateUI() {
+        Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(homeActivity);
+        finish();
     }
 
     @Override
