@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.danie.dine.Model.TableInformation;
 import com.example.danie.dine.Model.UserInformation;
 import com.example.danie.dine.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,15 +37,29 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mRef;
 
+    //firebase elements for table
+    private FirebaseAuth tableAuth;
+    private DatabaseReference tableRef;
+    private FirebaseDatabase tableDatabase;
+    private FirebaseAuth.AuthStateListener tableAuthlistener;
+    private String tableID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        //initialize firebase
+        //initialize firebase for user
         mAuth = FirebaseAuth.getInstance();
         mRef = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        //initialize firebase for table
+        tableAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentTable = tableAuth.getCurrentUser();
+        //tableID = currentTable.getUid();
+        tableDatabase = FirebaseDatabase.getInstance();
+        tableRef = tableDatabase.getReference().child("Tables");
 
         regFirstName = findViewById(R.id.regFirstName);
         regEmail = findViewById(R.id.loginEmail);
@@ -118,6 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
                             showMessage("User Registered!");
                             updateUI();
                             storeUserInfo();
+                            storeBookingInfo();
                         }
 
                     }
@@ -144,6 +160,21 @@ public class RegisterActivity extends AppCompatActivity {
         UserInformation currentUser = new UserInformation(userName, phoneNumber, userEmail);
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         mRef.child(firebaseUser.getUid()).setValue(currentUser);
+    }
+
+    private void storeBookingInfo(){
+        //this method is to store user details into database
+        String bookingName = regFirstName.getText().toString().trim();
+        String bookingEmail = regEmail.getText().toString().trim();
+        String bookingPhone = regPhone.getText().toString().trim();
+        String bookingDate = "";
+        String bookingTime = "";
+        String bookingGuestNumber = "";
+        String bookingStatus = "";
+
+        TableInformation currentBooking = new TableInformation(bookingName, bookingEmail, bookingPhone, bookingDate, bookingTime, bookingGuestNumber, bookingStatus);
+        FirebaseUser firebaseTable = tableAuth.getCurrentUser();
+        tableRef.child(firebaseTable.getUid()).setValue(currentBooking);
     }
 
     @Override

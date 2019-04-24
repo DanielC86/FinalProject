@@ -45,12 +45,13 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
     private TextView bookingUserEmail;
     private TextView bookingUserPhone;
 
-    //firebase elements
+    //firebase elements for user
     private FirebaseAuth mAuth;
     private DatabaseReference mRef;
     private FirebaseDatabase mDatabase;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    //firebase elements for table
     private FirebaseAuth tableAuth;
     private DatabaseReference tableRef;
     private FirebaseDatabase tableDatabase;
@@ -64,7 +65,7 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_management);
 
-
+        //firebase for user
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         userID = currentUser.getUid();
@@ -72,7 +73,6 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         mRef = mDatabase.getReference().child("Users");
 
         //firebase for table
-
         tableAuth = FirebaseAuth.getInstance();
         FirebaseUser currentTable = tableAuth.getCurrentUser();
         tableID = currentTable.getUid();
