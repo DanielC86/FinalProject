@@ -2,7 +2,6 @@ package com.example.danie.dine.Activities;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -162,7 +161,7 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
             public void onClick(View v) {
                 System.out.println("Reservation successful with date of " + currentDate + " and time " + currentTime + ", number of guests: " + guestNumber);
                 storeBookingInfo();
-                updateUI();
+                //updateUI();
                 showMessage("Request sent!");
             }
         });
@@ -235,11 +234,13 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         tableRef.child(firebaseTable.getUid()).setValue(currentBooking);
     }
 
+    /*
     private void updateUI() {
         Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(homeActivity);
         finish();
     }
+    */
 
     @Override
     protected void onStart() {

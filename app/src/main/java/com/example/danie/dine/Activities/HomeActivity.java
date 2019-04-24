@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.danie.dine.Model.TableInformation;
 import com.example.danie.dine.Model.UserInformation;
 import com.example.danie.dine.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -64,6 +63,8 @@ public class HomeActivity extends AppCompatActivity
         BookingManagementActivity = new Intent(this,com.example.danie.dine.Activities.BookingManagementActivity.class);
         setContentView(R.layout.activity_home);
 
+        //tableUserView.setText("you have no recent bookings");
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         userID = currentUser.getUid();
@@ -97,27 +98,12 @@ public class HomeActivity extends AppCompatActivity
         lblUserName = (TextView)findViewById(R.id.lblUsername);
         lblUserEmail = (TextView)findViewById(R.id.lblUserEmail);
         lblUserPhone = (TextView)findViewById(R.id.lblUserPhone);
-        tableUserView = (TextView)findViewById(R.id.tableUserView);
+        //tableUserView = (TextView)findViewById(R.id.tableUserView);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Menu");
         setSupportActionBar(toolbar);
 
-
-
-        /*
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                showInfo(dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        */
 
         //display user info
         mRef.addValueEventListener(new ValueEventListener() {
@@ -142,6 +128,7 @@ public class HomeActivity extends AppCompatActivity
             }
         });
 
+        /*
         //display booking info
         tableRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -160,8 +147,6 @@ public class HomeActivity extends AppCompatActivity
                 tableDetails.setBookingTime(dataSnapshot.child(tableID).getValue(TableInformation.class).getBookingTime());
                 tableDetails.setBookingGuestNumber(dataSnapshot.child(tableID).getValue(TableInformation.class).getBookingGuestNumber());
                 tableDetails.setBookingStatus(dataSnapshot.child(tableID).getValue(TableInformation.class).getBookingStatus());
-
-                tableUserView.setText("Table booked  for " + (tableDetails.getBookingName()) + ", date: " + (tableDetails.getBookingDate()) + "at: " + (tableDetails.getBookingTime()) + "Status: " + (tableDetails.getBookingStatus()));
             }
 
             @Override
@@ -169,6 +154,7 @@ public class HomeActivity extends AppCompatActivity
 
             }
         });
+        */
 
 
         //floating button
