@@ -57,7 +57,7 @@ public class RestaurantViewActivity extends AppCompatActivity {
         rAccept = (Button)findViewById(R.id.rAccept);
         rDecline = (Button)findViewById(R.id.rDecline);
 
-        /*
+        /*this does not work****
         //display table info for Restaurant
         tableRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -96,6 +96,8 @@ public class RestaurantViewActivity extends AppCompatActivity {
             }
         });
         */
+
+        //display booking details - this one work!
         tableRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
