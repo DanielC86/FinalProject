@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.danie.dine.Model.RestaurantInformation;
+import com.example.danie.dine.Model.UserInformation;
 import com.example.danie.dine.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,12 +32,13 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
     private Button btnRegRestSubmit;
     private ProgressBar regRestProgressBar;
 
-    //firebase stuff
-    //authentication
-    private FirebaseAuth mAuth;
+    //firebase stuff for restaurant
+    private FirebaseAuth rAuth;
+    private DatabaseReference rRef;
 
-    //realtime database
-    private DatabaseReference mRef;
+    //firebase stuff for user
+    private FirebaseAuth uAuth;
+    private DatabaseReference uRef;
 
 
     @Override
@@ -44,9 +46,13 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_register);
 
-        //initialize firebase
-        mAuth = FirebaseAuth.getInstance();
-        mRef = FirebaseDatabase.getInstance().getReference().child("Restaurants");
+        //initialize firebase for restaurant
+        rAuth = FirebaseAuth.getInstance();
+        rRef = FirebaseDatabase.getInstance().getReference().child("Restaurants");
+
+        //initialize firebase for user
+        uAuth = FirebaseAuth.getInstance();
+        uRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         //UI elements
         regRestName = findViewById(R.id.regRestName);
@@ -72,7 +78,6 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
     }
 
     private void registerNewRestaurant(){
-
         String restName = regRestName.getText().toString().trim();
         String restEmail = regRestEmail.getText().toString().trim();
         String restPhone = regRestPhone.getText().toString().trim();
@@ -106,7 +111,7 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
             regRestProgressBar.setVisibility(View.INVISIBLE);
         }
         else {
-            mAuth.createUserWithEmailAndPassword(restEmail, restPassword1)
+            rAuth.createUserWithEmailAndPassword(restEmail, restPassword1)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -115,6 +120,7 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
                                 showMessage("Restaurant Registered!");
                                 restaurantLogin();
                                 storeRestaurantInfo();
+                                storeUserInfo();
                             }
                         }
                     });
@@ -135,13 +141,27 @@ public class RestaurantRegisterActivity extends AppCompatActivity {
 
     //storing restaurant info into database
     private void storeRestaurantInfo(){
+        //method to store restaurant info in restaurant table
         String restaurantName = regRestName.getText().toString().trim();
         String restaurantPhone = regRestPhone.getText().toString().trim();
         String restaurantEmail = regRestEmail.getText().toString().trim();
 
         RestaurantInformation currentRestaurant = new RestaurantInformation(restaurantName, restaurantPhone, restaurantEmail);
-        FirebaseUser firebaseResaurant = mAuth.getCurrentUser();
-        mRef.child(firebaseResaurant.getUid()).setValue(currentRestaurant);
+        FirebaseUser firebaseResaurant = rAuth.getCurrentUser();
+        rRef.child(firebaseResaurant.getUid()).setValue(currentRestaurant);
+    }
+
+    //storing restaurant user info
+    private void storeUserInfo(){
+        //method to store restaurant user info in user table with restaurant user type
+        String userName = regRestName.getText().toString().trim();
+        String phoneNumber = regRestPhone.getText().toString().trim();
+        String userEmail = regRestEmail.getText().toString().trim();
+        String userType = "Restaurant";
+
+        UserInformation currentUser = new UserInformation(userName, phoneNumber, userEmail, userType);
+        FirebaseUser firebaseUser = uAuth.getCurrentUser();
+        uRef.child(firebaseUser.getUid()).setValue(currentUser);
     }
 
     @Override

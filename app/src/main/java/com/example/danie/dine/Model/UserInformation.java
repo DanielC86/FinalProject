@@ -5,6 +5,7 @@ public class UserInformation {
     private String userName;
     private String phoneNumber;
     private String userEmail;
+    private String userType;
 
 
     public UserInformation(){
@@ -35,9 +36,18 @@ public class UserInformation {
         this.userEmail = userEmail;
     }
 
-    public UserInformation(String userName, String phoneNumber, String userEmail) {
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public UserInformation(String userName, String phoneNumber, String userEmail, String userType) {
         this.userName = userName;
         this.phoneNumber = phoneNumber;
         this.userEmail = userEmail;
+        this.userType = userType;
     }
 }

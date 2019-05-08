@@ -156,8 +156,9 @@ public class RegisterActivity extends AppCompatActivity {
         String userName = regFirstName.getText().toString().trim();
         String phoneNumber = regPhone.getText().toString().trim();
         String userEmail = regEmail.getText().toString().trim();
+        String userType = "User";
 
-        UserInformation currentUser = new UserInformation(userName, phoneNumber, userEmail);
+        UserInformation currentUser = new UserInformation(userName, phoneNumber, userEmail, userType);
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         mRef.child(firebaseUser.getUid()).setValue(currentUser);
     }
