@@ -33,7 +33,6 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
 
     private int guestNumber = 1;
     String status = "Awaiting";
-    private TextView lblGuests;
     private String bookingDate;
     private String bookingTime;
     String currentDate;
@@ -41,6 +40,7 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
     private String guests;
     private TextView lblDate;
     private TextView lblTime;
+    private TextView lblGuests;
     private TextView bookingUserName;
     private TextView bookingUserEmail;
     private TextView bookingUserPhone;
@@ -64,6 +64,11 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_management);
+
+        lblDate = findViewById(R.id.lblDate);
+        lblTime = findViewById(R.id.lblTime);
+        lblGuests = findViewById(R.id.lblGuests);
+
 
         //firebase for user
         mAuth = FirebaseAuth.getInstance();
@@ -111,8 +116,7 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
             public void onClick(View v) {
                 //code to add guest number and display
                 guestNumber++;
-                TextView lblGuests = (TextView) findViewById(R.id.lblGuests);
-                lblGuests.setText("Guests: " + guestNumber);
+                //lblGuests.setText("Guests: " + guestNumber);
                 if (guestNumber > 8) {
                     guestNumber = guestNumber - 9;
                 }
@@ -159,10 +163,8 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         btnTableSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Reservation successful with date of " + currentDate + " and time " + currentTime + ", number of guests: " + guestNumber);
-                storeBookingInfo();
-                //updateUI();
-                showMessage("Request sent!");
+                bookTable();
+                System.out.println("******************************    Reservation successful with date of " + currentDate + " and time " + currentTime + ", number of guests: " + guestNumber);
             }
         });
 
@@ -187,8 +189,6 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
 
             }
         });
-
-
     }
 
     @Override
@@ -198,7 +198,6 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         currentDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(calendar.getTime());
-        TextView lblDate = (TextView) findViewById(R.id.lblDate);
         //lblDate.setVisibility(View.VISIBLE);
         lblDate.setText(currentDate);
 
@@ -210,7 +209,6 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         currentTime = DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime());
-        TextView lblTime = (TextView) findViewById(R.id.lblTime);
         lblTime.setText(currentTime);
     }
 
@@ -232,6 +230,27 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         TableInformation currentBooking = new TableInformation(bookingName, bookingEmail, bookingPhone, bookingDate, bookingTime, bookingGuestNumber, bookingStatus);
         FirebaseUser firebaseTable = tableAuth.getCurrentUser();
         tableRef.child(firebaseTable.getUid()).setValue(currentBooking);
+    }
+
+    private void bookTable(){
+
+        String bookingDate = lblDate.getText().toString().trim();
+        String bookingTime = lblTime.getText().toString().trim();
+        String guests = lblGuests.getText().toString().trim();
+
+        if (bookingDate.equals("Date")) {
+            showMessage("Please pick the date for booking!");
+        }
+        else if (bookingTime.equals("Time")) {
+            showMessage("Please pick the time for booking!");
+        }
+        else if (guests.equals("0")) {
+            showMessage("Please pick guests number!");
+        }
+        else
+            storeBookingInfo();
+        //updateUI();
+        showMessage("Request sent!");
     }
 
     /*
