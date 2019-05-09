@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.RestaurantRegisterActivity"></activity>
+        <activity android:name=".Activities.UserBookingView"></activity>
+        <activity android:name=".Activities.RestaurantRegisterActivity" />
         <activity android:name=".Activities.RestaurantLoginActivity" />
         <activity android:name=".Activities.WelcomeActivity">
             <intent-filter>

@@ -2,6 +2,7 @@ package com.example.danie.dine.Activities;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -116,7 +117,7 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
             public void onClick(View v) {
                 //code to add guest number and display
                 guestNumber++;
-                //lblGuests.setText("Guests: " + guestNumber);
+                lblGuests.setText("Guests: " + guestNumber);
                 if (guestNumber > 8) {
                     guestNumber = guestNumber - 9;
                 }
@@ -224,7 +225,7 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         String bookingPhone = bookingUserPhone.getText().toString().trim();
         String bookingDate = currentDate;
         String bookingTime = currentTime;
-        String bookingGuestNumber = guests;
+        String bookingGuestNumber = lblGuests.getText().toString();
         String bookingStatus = status;
 
         TableInformation currentBooking = new TableInformation(bookingName, bookingEmail, bookingPhone, bookingDate, bookingTime, bookingGuestNumber, bookingStatus);
@@ -236,7 +237,7 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
 
         String bookingDate = lblDate.getText().toString().trim();
         String bookingTime = lblTime.getText().toString().trim();
-        String guests = lblGuests.getText().toString().trim();
+        String checkGuests = lblGuests.getText().toString().trim();
 
         if (bookingDate.equals("Date")) {
             showMessage("Please pick the date for booking!");
@@ -244,22 +245,23 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         else if (bookingTime.equals("Time")) {
             showMessage("Please pick the time for booking!");
         }
-        else if (guests.equals("0")) {
+        else if (checkGuests.equals("0")) {
             showMessage("Please pick guests number!");
         }
         else
+            userBookings();
             storeBookingInfo();
         //updateUI();
         showMessage("Request sent!");
     }
 
-    /*
-    private void updateUI() {
-        Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(homeActivity);
+
+    private void userBookings() {
+        Intent userBookingView = new Intent(getApplicationContext(), UserBookingView.class);
+        startActivity(userBookingView);
         finish();
     }
-    */
+
 
     @Override
     protected void onStart() {

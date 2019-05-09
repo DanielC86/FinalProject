@@ -45,7 +45,7 @@ public class RestaurantViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_view);
 
-
+        //Firebase for table initialization
         tableAuth = FirebaseAuth.getInstance();
         FirebaseUser currentTable = tableAuth.getCurrentUser();
         tableID = currentTable.getUid();
