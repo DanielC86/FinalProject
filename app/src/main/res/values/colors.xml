@@ -5,4 +5,5 @@
     <color name="colorAccent">#7b0323</color>
     <color name="menuDrawerBackground">#8b7b0323</color>
     <color name="menuActionBar">#0E0D0E</color>
+    <color name="fontWhite">#FFFFFF</color>
 </resources>

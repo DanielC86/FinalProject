@@ -111,12 +111,12 @@ public class RestaurantLoginActivity extends AppCompatActivity {
     }
 
     private void updateUI(){
-        Intent RestaurantViewActivity = new Intent (getApplicationContext(), RestaurantViewActivity.class);
-        startActivity(RestaurantViewActivity);
+        Intent RestaurantBookingViewActivity = new Intent (getApplicationContext(), RestaurantBookingViewActivity.class);
+        startActivity(RestaurantBookingViewActivity);
     }
 
     private void restaurantRegister(){
-        Intent RestaurantRegisterActivity = new Intent(getApplicationContext(), com.example.danie.dine.Activities.RestaurantRegisterActivity.class);
-        startActivity(RestaurantRegisterActivity);
+        Intent RestaurantBookingViewActivity = new Intent(getApplicationContext(), com.example.danie.dine.Activities.RestaurantBookingViewActivity.class);
+        startActivity(RestaurantBookingViewActivity);
     }
 }

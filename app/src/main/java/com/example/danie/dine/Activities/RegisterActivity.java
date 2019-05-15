@@ -133,7 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
                             showMessage("User Registered!");
                             updateUI();
                             storeUserInfo();
-                            storeBookingInfo();
+                            //storeBookingInfo();
                         }
 
                     }

@@ -106,8 +106,8 @@ public class WelcomeActivity extends AppCompatActivity {
                     finish();
                 }
                 else if (userType.equals("Restaurant")) {
-                    Intent restaurantViewActivity = new Intent(getApplicationContext(), RestaurantViewActivity.class);
-                    startActivity(restaurantViewActivity);
+                    Intent RestaurantBookingViewActivity = new Intent(getApplicationContext(), RestaurantBookingViewActivity.class);
+                    startActivity(RestaurantBookingViewActivity);
                     finish();
                 }
                 else {
