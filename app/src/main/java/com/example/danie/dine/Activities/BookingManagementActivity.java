@@ -223,6 +223,7 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         String bookingName = bookingUserName.getText().toString().trim();
         String bookingEmail = bookingUserEmail.getText().toString().trim();
         String bookingPhone = bookingUserPhone.getText().toString().trim();
+        String requestKey = tableID;
         String bookingDate = currentDate;
         String bookingTime = currentTime;
         String bookingGuestNumber = lblGuests.getText().toString();

@@ -172,6 +172,7 @@ public class RegisterActivity extends AppCompatActivity {
         String bookingTime = "";
         String bookingGuestNumber = "";
         String bookingStatus = "";
+        String requestKey = "";
 
         TableInformation currentBooking = new TableInformation(bookingName, bookingEmail, bookingPhone, bookingDate, bookingTime, bookingGuestNumber, bookingStatus);
         FirebaseUser firebaseTable = tableAuth.getCurrentUser();

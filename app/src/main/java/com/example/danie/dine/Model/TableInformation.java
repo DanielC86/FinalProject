@@ -9,6 +9,7 @@ public class TableInformation {
     private String bookingTime;
     private String bookingGuestNumber;
     private String bookingStatus;
+    private String requestKey;
 
     public TableInformation(){
 
@@ -70,6 +71,16 @@ public class TableInformation {
         this.bookingGuestNumber = bookingGuestNumber;
     }
 
+
+    public String getRequestKey() {
+        return requestKey;
+    }
+
+
+    public void setRequestKey(String requestKey) {
+        this.requestKey = requestKey;
+    }
+
     public TableInformation(String bookingName, String bookingEmail, String bookingPhone, String bookingDate, String bookingTime, String bookingGuestNumber, String bookingStatus){
         this.bookingName = bookingName;
         this.bookingEmail = bookingEmail;
@@ -78,5 +89,6 @@ public class TableInformation {
         this.bookingTime = bookingTime;
         this.bookingGuestNumber = bookingGuestNumber;
         this.bookingStatus = bookingStatus;
+        this.requestKey = requestKey;
     }
 }

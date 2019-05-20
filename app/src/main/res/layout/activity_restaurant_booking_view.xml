@@ -6,6 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".Activities.RestaurantBookingViewActivity">
 
+    <Button
+        android:id="@+id/btnRDecline"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/button_style"
+        android:text="@string/decline_request"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/restaurantListView" />
+
+    <Button
+        android:id="@+id/btnRAccept"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="3dp"
+        android:background="@drawable/button_style"
+        android:text="@string/accept_request"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/btnRDecline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/restaurantListView" />
+
     <ListView
         android:id="@+id/restaurantListView"
         android:choiceMode="singleChoice"

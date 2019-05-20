@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -29,6 +31,12 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
     private String rBookingDate;
     private String rBookingTime;
     private String rBookingGuests;
+    public String key;
+
+    TableInformation selectedRequest;
+
+    private Button btnRAccept;
+    private Button btnRDecline;
 
     private ListView restaurantListView;
 
@@ -47,6 +55,10 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_booking_view);
+
+        btnRAccept = findViewById(R.id.btnRAccept);
+        btnRDecline = findViewById(R.id.btnRDecline);
+
 
         //Firebase for table initialization
         tableAuth = FirebaseAuth.getInstance();
@@ -67,6 +79,8 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                 TableInformation rTableInfo = dataSnapshot.getValue(TableInformation.class);
+                rTableInfo.setRequestKey(dataSnapshot.getKey());
+                key = rTableInfo.getRequestKey().toString();
                 rBookingInfo = ("Request for " + rTableInfo.getBookingName() + " date: " + rTableInfo.getBookingDate() + ", time: " + rTableInfo.getBookingTime() + ", guest number: " + rTableInfo.getBookingGuestNumber());
                 restaurantArrayList.add(rBookingInfo);
 
@@ -81,7 +95,9 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
+                String key = dataSnapshot.getKey();
+                restaurantArrayList.remove(key);
+                restaurantAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -95,19 +111,53 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
             }
         });
 
+        //trying to get list item value
         restaurantListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                view.setSelected(true);
-                //todo
-                showMessage("item pressed");
+                showMessage(key);
+                /*
+                restaurantArrayList.get(position);
+                tableRef.child("Tables").getKey();
+                tableRef.removeValue();
+                restaurantAdapter.notifyDataSetChanged();
+                */
+
             }
         });
+
+        btnRDecline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (key.isEmpty() || key == "") {
+                    showMessage("please select request first!");
+                }
+                else
+                {
+                    tableRef.child("Tables").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                           tableRef.removeValue();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+        });
+
 
     }
     //messaging method
     private void showMessage(String s) {
         Toast.makeText(getApplicationContext(), s,Toast.LENGTH_SHORT).show();
+    }
+
+    private void deleteItem(){
+        //todo
     }
 
 }
