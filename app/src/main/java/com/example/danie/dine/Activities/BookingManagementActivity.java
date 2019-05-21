@@ -67,8 +67,11 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         setContentView(R.layout.activity_booking_management);
 
         lblDate = findViewById(R.id.lblDate);
+        lblDate.setVisibility(View.INVISIBLE);
         lblTime = findViewById(R.id.lblTime);
+        lblTime.setVisibility(View.INVISIBLE);
         lblGuests = findViewById(R.id.lblGuests);
+        lblGuests.setVisibility(View.INVISIBLE);
 
 
         //firebase for user
@@ -115,6 +118,7 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                lblGuests.setVisibility(View.VISIBLE);
                 //code to add guest number and display
                 guestNumber++;
                 lblGuests.setText("Guests: " + guestNumber);
@@ -128,6 +132,7 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                lblGuests.setVisibility(View.VISIBLE);
                 //code to decrease guest number
                 TextView lblGuests = (TextView) findViewById(R.id.lblGuests);
                 lblGuests.setText("Guests: " + guestNumber);
@@ -199,7 +204,7 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         currentDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(calendar.getTime());
-        //lblDate.setVisibility(View.VISIBLE);
+        lblDate.setVisibility(View.VISIBLE);
         lblDate.setText(currentDate);
 
     }
@@ -210,6 +215,7 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
         currentTime = DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime());
+        lblTime.setVisibility(View.VISIBLE);
         lblTime.setText(currentTime);
     }
 
