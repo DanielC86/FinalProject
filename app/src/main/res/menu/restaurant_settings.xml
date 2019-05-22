@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/item1"
+    <item android:id="@+id/dinnerEvents"
         android:title="Dinner Events"
         app:showAsAction="never" />
 
-    <item android:id="@+id/item2"
+    <item android:id="@+id/uploadMenu"
         android:title="Upload Menu"
         app:showAsAction="never" />
 
-    <item android:id="@+id/item3"
+    <item android:id="@+id/logOut"
         android:title="Log Out"
         app:showAsAction="never" />
 

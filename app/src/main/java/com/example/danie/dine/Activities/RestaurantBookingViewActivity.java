@@ -213,7 +213,16 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
         Intent restaurantLoginActivity = new Intent(getApplicationContext(), RestaurantLoginActivity.class);
         startActivity(restaurantLoginActivity);
         finish();
+    }
 
+    private void uploadMenu(){
+        Intent menuUploaderActivity = new Intent(getApplicationContext(), UploadMenuActivity.class);
+        startActivity(menuUploaderActivity);
+    }
+
+    private void dinnerEvents(){
+        Intent allBookingsActivity = new Intent(getApplicationContext(), AllBookingsActivity.class);
+        startActivity(allBookingsActivity);
     }
 
     @Override
@@ -226,11 +235,13 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.item1:
+            case R.id.dinnerEvents:
+                dinnerEvents();
                 return true;
-            case R.id.item2:
+            case R.id.uploadMenu:
+                uploadMenu();
                 return true;
-            case R.id.item3:
+            case R.id.logOut:
                 logoff();
                 return true;
             default:return super.onOptionsItemSelected(item);
