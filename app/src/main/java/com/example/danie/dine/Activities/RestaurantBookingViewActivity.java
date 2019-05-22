@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.danie.dine.Model.DinnerEvent;
 import com.example.danie.dine.Model.TableInformation;
 import com.example.danie.dine.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,22 +21,20 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class RestaurantBookingViewActivity extends AppCompatActivity {
 
     private String rBookingInfo;
-    private String rBookingName;
-    private String rBookingDate;
-    private String rBookingTime;
-    private String rBookingGuests;
     public String key;
 
     private Boolean itemSelected = false;
     private int selectedPosition = 0;
 
+    private String tableRequest;
+    String requestDeclined;
+    String requestAccepted;
 
     private Button btnRAccept;
     private Button btnRDecline;
@@ -51,8 +50,14 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
     private DatabaseReference tableRef;
     private FirebaseDatabase tableDatabase;
     private FirebaseAuth.AuthStateListener tableAuthListener;
-
     private String tableID;
+
+    //firebase for dinner
+    private FirebaseAuth dinnerAuth;
+    private DatabaseReference dinnerRef;
+    private FirebaseDatabase dinnerDatabase;
+    private FirebaseAuth.AuthStateListener dinnerAuthListener;
+    private String dinnerID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,16 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
 
         btnRAccept = findViewById(R.id.btnRAccept);
         btnRDecline = findViewById(R.id.btnRDecline);
+
+        btnRAccept.setVisibility(View.INVISIBLE);
+        btnRDecline.setVisibility(View.INVISIBLE);
+
+        //Firebase for dinner initialization
+        dinnerAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentDinner = dinnerAuth.getCurrentUser();
+        dinnerID = currentDinner.getUid();
+        dinnerDatabase = FirebaseDatabase.getInstance();
+        dinnerRef = dinnerDatabase.getReference().child("DinnerEvent");
 
 
         //Firebase for table initialization
@@ -111,6 +126,14 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
+                String key = dataSnapshot.getKey();
+                int index = listKeys.indexOf(key);
+                if (index != -1) {
+                    restaurantArrayList.remove(index);
+                    listKeys.remove(index);
+                    restaurantAdapter.notifyDataSetChanged();
+                }
+
             }
 
             @Override
@@ -123,9 +146,13 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
         restaurantListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                tableRequest = restaurantArrayList.get(position);
                 showMessage(listKeys.get(selectedPosition));
                 selectedPosition = position;
                 itemSelected = true;
+
+                btnRAccept.setVisibility(View.VISIBLE);
+                btnRDecline.setVisibility(View.VISIBLE);
                 /*
                 restaurantArrayList.get(position);
                 tableRef.child("Tables").getKey();
@@ -139,8 +166,20 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
         btnRDecline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tableRequest = ("DECLINED " + tableRequest);
+                dineEvent();
                 deleteItem(restaurantListView);
 
+
+            }
+        });
+
+        btnRAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tableRequest = ("ACCEPTED " + tableRequest);
+                dineEvent();
+                deleteItem(restaurantListView);
             }
         });
 
@@ -156,5 +195,14 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
         restaurantListView.setItemChecked(selectedPosition, false);
         tableRef.child(listKeys.get(selectedPosition)).removeValue();
     }
+
+    public void dineEvent(){
+        String dinnerRequest = tableRequest;
+        DinnerEvent currentDinner = new DinnerEvent(dinnerRequest);
+        FirebaseUser dinnerTable = dinnerAuth.getCurrentUser();
+        dinnerRef.push().setValue(dinnerRequest);
+
+    }
+
 
 }

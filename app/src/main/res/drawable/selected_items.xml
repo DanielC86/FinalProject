@@ -6,7 +6,7 @@
         android:textColor = "@color/fontWhite"
         ></item>
     <item android:state_pressed="false"
-        android:drawable="@color/fontWhite"
-        android:textColor = "@color/menuActionBar"
+        android:drawable="@color/colorPrimary"
+        android:textColor = "@color/fontWhite"
         ></item>
 </selector>
