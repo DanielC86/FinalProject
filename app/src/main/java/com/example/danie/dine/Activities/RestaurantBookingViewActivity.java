@@ -33,7 +33,9 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
     private String rBookingGuests;
     public String key;
 
-    TableInformation selectedRequest;
+    private Boolean itemSelected = false;
+    private int selectedPosition = 0;
+
 
     private Button btnRAccept;
     private Button btnRDecline;
@@ -42,6 +44,7 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
 
     private ArrayList<String> restaurantArrayList = new ArrayList<>();
     private ArrayAdapter<String> restaurantAdapter;
+    ArrayList<String> listKeys = new ArrayList<String>();
 
     //firebase for table
     private FirebaseAuth tableAuth;
@@ -84,6 +87,7 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
                 rBookingInfo = ("Request for " + rTableInfo.getBookingName() + " date: " + rTableInfo.getBookingDate() + ", time: " + rTableInfo.getBookingTime() + ", guest number: " + rTableInfo.getBookingGuestNumber());
                 restaurantArrayList.add(rBookingInfo);
 
+                listKeys.add(dataSnapshot.getKey());
                 restaurantAdapter.notifyDataSetChanged();
 
             }
@@ -96,8 +100,12 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                 String key = dataSnapshot.getKey();
-                restaurantArrayList.remove(key);
-                restaurantAdapter.notifyDataSetChanged();
+                int index = listKeys.indexOf(key);
+                if (index != -1) {
+                    restaurantArrayList.remove(index);
+                    listKeys.remove(index);
+                    restaurantAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -115,7 +123,9 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
         restaurantListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showMessage(key);
+                showMessage(listKeys.get(selectedPosition));
+                selectedPosition = position;
+                itemSelected = true;
                 /*
                 restaurantArrayList.get(position);
                 tableRef.child("Tables").getKey();
@@ -129,23 +139,8 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
         btnRDecline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (key.isEmpty() || key == "") {
-                    showMessage("please select request first!");
-                }
-                else
-                {
-                    tableRef.child("Tables").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                           tableRef.removeValue();
-                        }
+                deleteItem(restaurantListView);
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                }
             }
         });
 
@@ -156,8 +151,10 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), s,Toast.LENGTH_SHORT).show();
     }
 
-    private void deleteItem(){
-        //todo
+
+    public void deleteItem(View view) {
+        restaurantListView.setItemChecked(selectedPosition, false);
+        tableRef.child(listKeys.get(selectedPosition)).removeValue();
     }
 
 }
