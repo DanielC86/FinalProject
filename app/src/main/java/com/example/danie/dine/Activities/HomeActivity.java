@@ -1,6 +1,9 @@
 package com.example.danie.dine.Activities;
 
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +22,8 @@ import android.widget.Toast;
 
 import com.example.danie.dine.Model.UserInformation;
 import com.example.danie.dine.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,18 +31,33 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
     private Intent WelcomeActivity;
     private Intent BookingManagementActivity;
     private Button btnBookTable;
+    private Button btnUserViewBooking;
+
 
     //firebase elements
     private FirebaseAuth mAuth;
     private DatabaseReference mRef;
     private FirebaseDatabase mDatabase;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
+    //firebase Storage
+    FirebaseStorage menuStorage;
+    StorageReference menuReference;
+    StorageReference fileRef;
+
+
 
     //firebase for table
     private FirebaseAuth tableAuth;
@@ -55,6 +75,8 @@ public class HomeActivity extends AppCompatActivity
     private String userID;
     private String tableID;
 
+    private Button btnViewMenu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +84,9 @@ public class HomeActivity extends AppCompatActivity
         WelcomeActivity = new Intent(this,com.example.danie.dine.Activities.WelcomeActivity.class);
         BookingManagementActivity = new Intent(this,com.example.danie.dine.Activities.BookingManagementActivity.class);
         setContentView(R.layout.activity_home);
+
+        btnViewMenu = findViewById(R.id.btnViewMenu);
+        btnUserViewBooking = findViewById(R.id.btnUserViewBooking);
 
         //tableUserView.setText("you have no recent bookings");
 
@@ -71,6 +96,7 @@ public class HomeActivity extends AppCompatActivity
         mDatabase = FirebaseDatabase.getInstance();
         mRef = mDatabase.getReference().child("Users");
 
+        //not in use
         tableAuth = FirebaseAuth.getInstance();
         FirebaseUser currentTable = tableAuth.getCurrentUser();
         tableID = currentTable.getUid();
@@ -125,6 +151,22 @@ public class HomeActivity extends AppCompatActivity
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        btnUserViewBooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                viewUserBooking();
+            }
+        });
+
+
+        btnViewMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewMenu();
             }
         });
 
@@ -242,6 +284,42 @@ public class HomeActivity extends AppCompatActivity
 
         //showing toast message method
         Toast.makeText(getApplicationContext(), message,Toast.LENGTH_SHORT).show();
+    }
+
+    private void viewMenu(){
+        menuReference = menuStorage.getInstance().getReference();
+        fileRef = menuReference.child("Menus/menu.pdf");
+        fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                String url = uri.toString();
+                downloadMenu(HomeActivity.this, "menu", ".pdf", DIRECTORY_DOWNLOADS, url);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
+    private void viewUserBooking(){
+        Intent userBookingView = new Intent(getApplicationContext(), UserBookingView.class);
+        startActivity(userBookingView);
+    }
+
+    private void downloadMenu(Context context, String filename, String fileExtension, String destinationDirectory, String Url){
+
+        DownloadManager downloadManager = (DownloadManager) context.
+                getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(Url);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalFilesDir(context, destinationDirectory, filename + fileExtension);
+        downloadManager.enqueue(request);
+
     }
 
 

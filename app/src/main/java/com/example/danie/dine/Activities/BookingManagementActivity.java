@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.example.danie.dine.Model.UserInformation;
 import com.example.danie.dine.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,6 +47,8 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
     private TextView bookingUserName;
     private TextView bookingUserEmail;
     private TextView bookingUserPhone;
+
+    public String key;
 
     //firebase elements for user
     private FirebaseAuth mAuth;
@@ -238,6 +242,33 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
         TableInformation currentBooking = new TableInformation(bookingName, bookingEmail, bookingPhone, bookingDate, bookingTime, bookingGuestNumber, bookingStatus);
         FirebaseUser firebaseTable = tableAuth.getCurrentUser();
         tableRef.child(firebaseTable.getUid()).setValue(currentBooking);
+
+        tableRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                key = dataSnapshot.getKey();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void bookTable(){
@@ -260,14 +291,19 @@ public class BookingManagementActivity extends AppCompatActivity implements Date
             storeBookingInfo();
         //updateUI();
         showMessage("Request sent!");
+        showMessage((key));
     }
+
+
 
 
     private void userBookings() {
-        Intent userBookingView = new Intent(getApplicationContext(), UserBookingView.class);
-        startActivity(userBookingView);
+        Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
+        homeActivity.putExtra("Content", key);
+        startActivity(homeActivity);
         finish();
     }
+
 
 
     @Override

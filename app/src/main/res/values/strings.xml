@@ -19,4 +19,6 @@
     <string name="choose_file">Choose File</string>
     <string name="upload">Upload</string>
     <string name="back">Back</string>
+    <string name="view_menu">View Menu</string>
+    <string name="my_request">My Requests</string>
 </resources>

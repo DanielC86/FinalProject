@@ -96,6 +96,7 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
 
 
 
+        //display booking requests elements in listView
         tableRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -204,14 +205,14 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
         String dinnerRequest = tableRequest;
         DinnerEvent currentDinner = new DinnerEvent(dinnerRequest);
         FirebaseUser dinnerTable = dinnerAuth.getCurrentUser();
-        dinnerRef.push().setValue(dinnerRequest);
+        dinnerRef.setValue(currentDinner);
 
     }
 
     private void logoff() {
         tableAuth.signOut();
-        Intent restaurantLoginActivity = new Intent(getApplicationContext(), RestaurantLoginActivity.class);
-        startActivity(restaurantLoginActivity);
+        Intent welcomeActivity = new Intent(getApplicationContext(), WelcomeActivity.class);
+        startActivity(welcomeActivity);
         finish();
     }
 
