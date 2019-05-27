@@ -170,33 +170,6 @@ public class HomeActivity extends AppCompatActivity
             }
         });
 
-        /*
-        //display booking info
-        tableRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                TableInformation tableDetails = dataSnapshot.getValue(TableInformation.class);
-                tableDetails.getBookingName();
-                tableDetails.getBookingEmail();
-                tableDetails.getBookingPhone();
-                tableDetails.getBookingDate();
-                tableDetails.getBookingTime();
-                tableDetails.getBookingGuestNumber();
-                tableDetails.getBookingStatus();
-
-                tableDetails.setBookingName(dataSnapshot.child(tableID).getValue(TableInformation.class).getBookingName());
-                tableDetails.setBookingDate(dataSnapshot.child(tableID).getValue(TableInformation.class).getBookingDate());
-                tableDetails.setBookingTime(dataSnapshot.child(tableID).getValue(TableInformation.class).getBookingTime());
-                tableDetails.setBookingGuestNumber(dataSnapshot.child(tableID).getValue(TableInformation.class).getBookingGuestNumber());
-                tableDetails.setBookingStatus(dataSnapshot.child(tableID).getValue(TableInformation.class).getBookingStatus());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        */
 
 
         //floating button
@@ -264,21 +237,7 @@ public class HomeActivity extends AppCompatActivity
         finish();
 
     }
-    /*
-        //this method displays user info from database
-    private void showInfo(DataSnapshot dataSnapshot) {
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
-            UserInformation uInfo = new UserInformation();
-            uInfo.setUserName(ds.child(userID).getValue(UserInformation.class).getUserName()); //get username
-            uInfo.setUserEmail(ds.child(userID).getValue(UserInformation.class).getUserEmail()); //get user email
-            uInfo.setPhoneNumber(ds.child(userID).getValue(UserInformation.class).getPhoneNumber()); //get user phone number
-            //display user details
-            lblUserName.setText(uInfo.getUserName());
-            lblUserEmail.setText(uInfo.getUserEmail());
-            lblUserPhone.setText(uInfo.getPhoneNumber());
-        }
-    }
-    */
+
 
     private void showMessage(String message) {
 

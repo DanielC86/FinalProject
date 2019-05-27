@@ -57,45 +57,6 @@ public class RestaurantViewActivity extends AppCompatActivity {
         rAccept = (Button)findViewById(R.id.rAccept);
         rDecline = (Button)findViewById(R.id.rDecline);
 
-        /*this does not work****
-        //display table info for Restaurant
-        tableRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                TableInformation tableDetails = dataSnapshot.getValue(TableInformation.class);
-
-                tableDetails.getBookingName();
-                tableDetails.getBookingEmail();
-                tableDetails.getBookingPhone();
-                tableDetails.getBookingDate();
-                tableDetails.getBookingTime();
-                tableDetails.getBookingGuestNumber();
-                tableDetails.getBookingStatus();
-
-                tableDetails.setBookingName(dataSnapshot.getValue(TableInformation.class).getBookingName());
-                tableDetails.setBookingDate(dataSnapshot.getValue(TableInformation.class).getBookingDate());
-                tableDetails.setBookingTime(dataSnapshot.getValue(TableInformation.class).getBookingTime());
-                tableDetails.setBookingGuestNumber(dataSnapshot.getValue(TableInformation.class).getBookingGuestNumber());
-                tableDetails.setBookingStatus(dataSnapshot.getValue(TableInformation.class).getBookingStatus());
-
-                rBookingName = tableDetails.getBookingName();
-                rBookingDate = tableDetails.getBookingDate();
-                rBookingTime = tableDetails.getBookingTime();
-                rBookingGuests = tableDetails.getBookingGuestNumber();
-
-
-                rBookingInfo = ("Request for " + rBookingName + " date: " + rBookingDate + ", time: " + rBookingTime + ", guest number: " + rBookingGuests);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                System.out.println("The read failed: " + databaseError.getCode());
-
-            }
-        });
-        */
 
         //display booking details - this one work!
         tableRef.addChildEventListener(new ChildEventListener() {

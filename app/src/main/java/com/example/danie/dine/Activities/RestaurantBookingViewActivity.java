@@ -158,12 +158,6 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
 
                 btnRAccept.setVisibility(View.VISIBLE);
                 btnRDecline.setVisibility(View.VISIBLE);
-                /*
-                restaurantArrayList.get(position);
-                tableRef.child("Tables").getKey();
-                tableRef.removeValue();
-                restaurantAdapter.notifyDataSetChanged();
-                */
 
             }
         });
@@ -209,6 +203,11 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
 
     }
 
+    private void viewRequests(){
+        Intent userBookingView = new Intent(getApplicationContext(), UserBookingView.class);
+        startActivity(userBookingView);
+    }
+
     private void logoff() {
         tableAuth.signOut();
         Intent welcomeActivity = new Intent(getApplicationContext(), WelcomeActivity.class);
@@ -237,7 +236,8 @@ public class RestaurantBookingViewActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.dinnerEvents:
-                dinnerEvents();
+                //dinnerEvents();
+                viewRequests();
                 return true;
             case R.id.uploadMenu:
                 uploadMenu();

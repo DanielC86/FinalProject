@@ -63,7 +63,8 @@ public class RestaurantLoginActivity extends AppCompatActivity {
         btnRestaurantRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                restaurantRegister();
+                showMessage("Contact System Administrator");
+                //restaurantRegister();
             }
         });
     }
