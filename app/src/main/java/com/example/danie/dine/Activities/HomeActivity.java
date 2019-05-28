@@ -218,7 +218,7 @@ public class HomeActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_edit_details) {
             //open edit user details activity, for testing purposes set to log off
-            logoff();
+            editDetails();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -279,6 +279,11 @@ public class HomeActivity extends AppCompatActivity
         request.setDestinationInExternalFilesDir(context, destinationDirectory, filename + fileExtension);
         downloadManager.enqueue(request);
 
+    }
+
+    private void editDetails(){
+        Intent editDetailsActivity = new Intent(getApplicationContext(), EditDetailsActivity.class);
+        startActivity(editDetailsActivity);
     }
 
 

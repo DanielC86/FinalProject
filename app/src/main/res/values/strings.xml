@@ -21,4 +21,5 @@
     <string name="back">Back</string>
     <string name="view_menu">View Menu</string>
     <string name="my_request">My Requests</string>
+    <string name="edit_details">Edit</string>
 </resources>
