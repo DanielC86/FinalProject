@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.danie.dine.Model.UserInformation;
 import com.example.danie.dine.R;
@@ -40,6 +41,9 @@ public class EditDetailsActivity extends AppCompatActivity {
     private TextView lblEditEmail;
     private TextView lblEditPhone;
 
+    private String newName;
+    private String newEmail;
+    private String newPhone;
 
 
 
@@ -145,12 +149,15 @@ public class EditDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //todo
+                editEmail();
             }
         });
 
         btnEditPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //todo
+                editPhone();
 
             }
         });
@@ -158,21 +165,36 @@ public class EditDetailsActivity extends AppCompatActivity {
         btnSaveName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo
+                if (editTextName.getText().toString().isEmpty()) {
+                    showMessage("Please provide new user name!!!");
+                }
+                else {
+                    saveName();
+                }
             }
         });
 
         btnSaveEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo
+                if (editTextEmail.getText().toString().isEmpty()) {
+                    showMessage("Please provide new user email!!!");
+                }
+                else {
+                    saveEmail();
+                }
             }
         });
 
         btnSavePhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo
+                if (editTextPhone.getText().toString().isEmpty()) {
+                    showMessage("Please provide new user phone!!!");
+                }
+                else {
+                    savePhone();
+                }
             }
         });
     }
@@ -186,26 +208,98 @@ public class EditDetailsActivity extends AppCompatActivity {
         btnEditName.setVisibility(View.INVISIBLE);
         btnEditEmail.setVisibility(View.INVISIBLE);
         btnEditPhone.setVisibility(View.INVISIBLE);
+        btnEditBack.setVisibility(View.INVISIBLE);
 
     }
 
     private void editEmail(){
-        //todo
+        editTextName.setVisibility(View.INVISIBLE);
+        btnSaveName.setVisibility(View.INVISIBLE);
+        lblEditName.setVisibility(View.INVISIBLE);
+        lblEditEmail.setVisibility(View.INVISIBLE);
+        lblEditPhone.setVisibility(View.INVISIBLE);
+        btnEditName.setVisibility(View.INVISIBLE);
+        btnEditEmail.setVisibility(View.INVISIBLE);
+        btnEditPhone.setVisibility(View.INVISIBLE);
+        btnEditBack.setVisibility(View.INVISIBLE);
+        editTextEmail.setVisibility(View.VISIBLE);
+        btnSaveEmail.setVisibility(View.VISIBLE);
     }
 
     private void editPhone(){
-        //todo
+        editTextName.setVisibility(View.INVISIBLE);
+        btnSaveName.setVisibility(View.INVISIBLE);
+        lblEditName.setVisibility(View.INVISIBLE);
+        lblEditEmail.setVisibility(View.INVISIBLE);
+        lblEditPhone.setVisibility(View.INVISIBLE);
+        btnEditName.setVisibility(View.INVISIBLE);
+        btnEditEmail.setVisibility(View.INVISIBLE);
+        btnEditPhone.setVisibility(View.INVISIBLE);
+        btnEditBack.setVisibility(View.INVISIBLE);
+        editTextPhone.setVisibility(View.VISIBLE);
+        btnSavePhone.setVisibility(View.VISIBLE);
     }
 
     private void saveName(){
-        //todo
+        editTextName.setVisibility(View.VISIBLE);
+        btnSaveName.setVisibility(View.VISIBLE);
+        lblEditName.setVisibility(View.INVISIBLE);
+        lblEditEmail.setVisibility(View.INVISIBLE);
+        lblEditPhone.setVisibility(View.INVISIBLE);
+        btnEditName.setVisibility(View.INVISIBLE);
+        btnEditEmail.setVisibility(View.INVISIBLE);
+        btnEditPhone.setVisibility(View.INVISIBLE);
+        btnEditBack.setVisibility(View.INVISIBLE);
+        String userEmail = lblEditEmail.getText().toString();
+        String phoneNumber = lblEditPhone.getText().toString();
+        String userType = "User";
+
+        newName = editTextName.getText().toString();
+        UserInformation currentUser = new UserInformation(newName, phoneNumber, userEmail, userType);
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        mRef.child(firebaseUser.getUid()).setValue(currentUser);
+
     }
 
     private void saveEmail(){
-        //todo
+        editTextName.setVisibility(View.VISIBLE);
+        btnSaveName.setVisibility(View.VISIBLE);
+        lblEditName.setVisibility(View.INVISIBLE);
+        lblEditEmail.setVisibility(View.INVISIBLE);
+        lblEditPhone.setVisibility(View.INVISIBLE);
+        btnEditName.setVisibility(View.INVISIBLE);
+        btnEditEmail.setVisibility(View.INVISIBLE);
+        btnEditPhone.setVisibility(View.INVISIBLE);
+        btnEditBack.setVisibility(View.INVISIBLE);
+
+        String userName = lblEditName.getText().toString();
+        String phoneNumber = lblEditPhone.getText().toString();
+        String userType = "User";
+
+        newEmail = editTextEmail.getText().toString();
+        UserInformation currentUser = new UserInformation(userName, phoneNumber, newEmail, userType);
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        mRef.child(firebaseUser.getUid()).setValue(currentUser);
     }
     private void savePhone(){
-        //todo
+        editTextName.setVisibility(View.VISIBLE);
+        btnSaveName.setVisibility(View.VISIBLE);
+        lblEditName.setVisibility(View.INVISIBLE);
+        lblEditEmail.setVisibility(View.INVISIBLE);
+        lblEditPhone.setVisibility(View.INVISIBLE);
+        btnEditName.setVisibility(View.INVISIBLE);
+        btnEditEmail.setVisibility(View.INVISIBLE);
+        btnEditPhone.setVisibility(View.INVISIBLE);
+        btnEditBack.setVisibility(View.INVISIBLE);
+
+        String userName = lblEditName.getText().toString();
+        String userPhone = lblEditEmail.getText().toString();
+        String userType = "User";
+
+        newPhone = editTextPhone.getText().toString();
+        UserInformation currentUser = new UserInformation(userName, userPhone, newPhone, userType);
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        mRef.child(firebaseUser.getUid()).setValue(currentUser);
     }
 
 
@@ -214,5 +308,12 @@ public class EditDetailsActivity extends AppCompatActivity {
     private void editBack(){
         Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(homeActivity);
+    }
+
+
+    private void showMessage(String message) {
+
+        //showing toast message method
+        Toast.makeText(getApplicationContext(), message,Toast.LENGTH_SHORT).show();
     }
 }
