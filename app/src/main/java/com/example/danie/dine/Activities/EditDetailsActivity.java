@@ -131,7 +131,7 @@ public class EditDetailsActivity extends AppCompatActivity {
         btnEditBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editBack();
+                goBack();
                 finish();
 
             }
@@ -140,7 +140,14 @@ public class EditDetailsActivity extends AppCompatActivity {
         btnEditName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo
+                lblEditName.setVisibility(View.INVISIBLE);
+                lblEditEmail.setVisibility(View.INVISIBLE);
+                lblEditPhone.setVisibility(View.INVISIBLE);
+                btnEditName.setVisibility(View.INVISIBLE);
+                btnEditEmail.setVisibility(View.INVISIBLE);
+                btnEditPhone.setVisibility(View.INVISIBLE);
+                btnEditBack.setVisibility(View.INVISIBLE);
+
                 editName();
             }
         });
@@ -205,14 +212,6 @@ public class EditDetailsActivity extends AppCompatActivity {
     private void editName(){
         editTextName.setVisibility(View.VISIBLE);
         btnSaveName.setVisibility(View.VISIBLE);
-
-        lblEditName.setVisibility(View.INVISIBLE);
-        lblEditEmail.setVisibility(View.INVISIBLE);
-        lblEditPhone.setVisibility(View.INVISIBLE);
-        btnEditName.setVisibility(View.INVISIBLE);
-        btnEditEmail.setVisibility(View.INVISIBLE);
-        btnEditPhone.setVisibility(View.INVISIBLE);
-        btnEditBack.setVisibility(View.INVISIBLE);
 
     }
 
@@ -301,22 +300,16 @@ public class EditDetailsActivity extends AppCompatActivity {
         btnEditBack.setVisibility(View.VISIBLE);
 
         String userName = lblEditName.getText().toString();
-        String userPhone = lblEditEmail.getText().toString();
+        String userEmail = lblEditEmail.getText().toString();
         String userType = "User";
 
         newPhone = editTextPhone.getText().toString();
-        UserInformation currentUser = new UserInformation(userName, userPhone, newPhone, userType);
+        UserInformation currentUser = new UserInformation(userName, userEmail, newPhone, userType);
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         mRef.child(firebaseUser.getUid()).setValue(currentUser);
     }
 
 
-
-
-    private void editBack(){
-        Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(homeActivity);
-    }
 
 
     private void showMessage(String message) {
@@ -329,5 +322,10 @@ public class EditDetailsActivity extends AppCompatActivity {
     private void restartActivity(){
         Intent editDetailsActivity = new Intent(getApplicationContext(), EditDetailsActivity.class);
         startActivity(editDetailsActivity);
+    }
+
+    private void goBack(){
+        Intent homeActivity = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(homeActivity);
     }
 }
