@@ -71,7 +71,7 @@ public class EditDetailsActivity extends AppCompatActivity {
         mRef = mDatabase.getReference().child("Users");
 
 
-        btnEditBack = findViewById(R.id.btnSaveEmail);
+        btnEditBack = findViewById(R.id.btnEditBack);
         btnEditName = findViewById(R.id.btnEditName);
         btnEditEmail = findViewById(R.id.btnEditEmail);
         btnEditPhone = findViewById(R.id.btnEditPhone);
@@ -259,7 +259,7 @@ public class EditDetailsActivity extends AppCompatActivity {
         String phoneNumber = lblEditPhone.getText().toString();
         String userType = "User";
 
-        newName = editTextName.getText().toString();
+        String newName = editTextName.getText().toString();
         UserInformation currentUser = new UserInformation(newName, phoneNumber, userEmail, userType);
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         mRef.child(firebaseUser.getUid()).setValue(currentUser);
@@ -283,7 +283,7 @@ public class EditDetailsActivity extends AppCompatActivity {
         String phoneNumber = lblEditPhone.getText().toString();
         String userType = "User";
 
-        newEmail = editTextEmail.getText().toString();
+        String newEmail = editTextEmail.getText().toString();
         UserInformation currentUser = new UserInformation(userName, phoneNumber, newEmail, userType);
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         mRef.child(firebaseUser.getUid()).setValue(currentUser);
@@ -303,8 +303,8 @@ public class EditDetailsActivity extends AppCompatActivity {
         String userEmail = lblEditEmail.getText().toString();
         String userType = "User";
 
-        newPhone = editTextPhone.getText().toString();
-        UserInformation currentUser = new UserInformation(userName, userEmail, newPhone, userType);
+        String newPhone = editTextPhone.getText().toString();
+        UserInformation currentUser = new UserInformation(userName, newPhone, userEmail, userType);
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         mRef.child(firebaseUser.getUid()).setValue(currentUser);
     }
