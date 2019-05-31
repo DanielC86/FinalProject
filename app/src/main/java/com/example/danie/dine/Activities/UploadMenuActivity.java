@@ -28,8 +28,6 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.concurrent.atomic.AtomicMarkableReference;
-
 public class UploadMenuActivity extends AppCompatActivity {
 
 
@@ -116,7 +114,7 @@ public class UploadMenuActivity extends AppCompatActivity {
 
         StorageReference storageReference = rStorage.getReference();
 
-        final String filename = System.currentTimeMillis()+"";
+        final String filename = "menu";
 
         storageReference.child("Menus").child(filename).putFile(menuUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
