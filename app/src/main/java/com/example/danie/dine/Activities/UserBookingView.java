@@ -60,10 +60,15 @@ public class UserBookingView extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 DinnerEvent currentDinner = dataSnapshot.getValue(DinnerEvent.class);
-                currentDinner.getDinnerRequest();
+                if (dataSnapshot.hasChildren()){
+                    currentDinner.getDinnerRequest();
 
-                dinner = currentDinner.getDinnerRequest();
-                userBookingView.setText(dinner);
+                    dinner = currentDinner.getDinnerRequest();
+                    userBookingView.setText(dinner);
+                }
+                else {
+                    userBookingView.setText("No Data");
+                }
 
             }
 
